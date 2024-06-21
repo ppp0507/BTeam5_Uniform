@@ -102,7 +102,7 @@ public class UserDAO {
 			String sql = "INSERT INTO user(name, password, email, address, authority_id) VALUES('" + name + "','"
 					+ password + "','" + email + "','" + address + "',2)";
 
-			smt.executeQuery(sql);
+			smt.executeUpdate(sql);
 		}
 
 		catch (Exception e) {
