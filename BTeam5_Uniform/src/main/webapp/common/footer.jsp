@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<!-- @author 屋比久 -->
 
-</body>
-</html>
+<%-- フッター --%>
+<footer>
+    <div style="padding: 1em;">2024 copyright なんちゃら これはフッターです</div>
+</footer>
