@@ -3,6 +3,10 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/** 以下、このファイルのメソッドの種類
+ * 
+ */
+
 public class OrderDAO {
 	
 	//DBドライバー、住所、ユーザー、パスワード
