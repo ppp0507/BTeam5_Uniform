@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@page import="bean.User" %>
 
-<!-- @author 屋比久 -->
-
 <%
 	// セッションからユーザー情報を取得
 	User user = (User)session.getAttribute("user");
@@ -18,13 +16,6 @@
 
 %>
 
-<head>
-	<meta charset="UTF-8">
-	<title>
-		<%-- ページのタイトル --%>
-		${ param.title }
-	</title>
-</head>
 
 <%-- ヘッダー:今ログインしているユーザー表示　--%>
 <header>

@@ -1,0 +1,173 @@
+@charset "UTF-8";
+/* 
+    style.css
+    担当: 屋比久
+*/
+
+header {
+    >div {
+        text-align: left;
+    }
+    border-bottom: 1px black solid;
+}
+
+nav {
+    height: 70px;
+    margin: 5px 0;
+    background-color: skyblue;
+}
+
+main{
+    min-height: 300px ;
+    padding: 20px;
+}
+
+footer{
+    border-top: solid 1px black;
+    background-color: skyblue;
+}
+
+
+
+.blue-button{
+    cursor: pointer;
+    display: block;
+    text-decoration: auto;
+    color: white;
+    font-weight: bold;
+    background-color: #03A9F4;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+.blue-input-button{
+    cursor: pointer;
+    border: solid 1px lightgray;
+    border-radius: 5px;
+    padding: 3px 5px;
+    background-color: skyblue;
+}
+
+.card-flex{
+    display: flex;
+    row-gap: 20px;
+    column-gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-flex > .card{
+    border: solid 1px lightgray;
+    border-radius: 5px;
+    width: 200px;
+    height: 200px;
+    padding: 1em;
+    text-align: center;
+}
+
+.card h3{
+    margin: unset;
+    overflow: hidden;
+}
+
+.card p{
+    height: 4.5em;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.left-center-list{
+    margin: auto;
+    width: fit-content;
+}
+
+.link-button a{
+    display: inline-block;
+    width: 100%;
+    margin: 1em;
+    padding: 5px;
+    background-color: skyblue;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.select-box select{
+    margin: 1em;
+    min-width: 7em;
+    font-size: 1em;
+}
+
+.center-flex{
+    display: flex;
+    flex-wrap:  wrap;
+    width: 500px;
+    justify-content: center;
+}
+
+.center-flex div{
+    flex: 1;
+}
+
+.center-flex > div{
+    padding: 5px;
+    border: solid 1px gray;
+    word-break: break-all;
+}
+
+.center-flex > div > div{
+    text-align: left;
+}
+
+.solid-table{
+    border-collapse: collapse;
+    border: solid 2px darkgray;
+}
+
+.solid-table th{
+    background-color: aliceblue;
+}
+
+.solid-table th, .solid-table td{
+    border: solid 1px gray;
+}
+
+.table-padding th, .table-padding td{
+    padding: 2px 5px;
+}
+
+.flex-indent{
+    width: 100%;
+}
+
+.flex-bottom{
+    display: flex;
+    justify-content: center;
+    column-gap: 2em;
+    margin: 2em;
+}
+
+.guest-user{
+    display: inline-block;
+    padding: 5px;
+    background-color: rgb(255, 226, 226);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.common-user{
+    display: inline-block;
+    padding: 5px;
+    background-color: rgb(215, 255, 135);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.admin-user{
+    display: inline-block;
+    padding: 5px;
+    background-color: rgb(255, 212, 131);
+    border-radius: 5px;
+    font-weight: bold;
+}
