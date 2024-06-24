@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* 
     style.css
     担当: 屋比久
@@ -28,6 +27,10 @@ footer{
 }
 
 
+.nav-padding{
+	display: inline-block;
+	padding: 0.5em;
+}
 
 .blue-button{
     cursor: pointer;

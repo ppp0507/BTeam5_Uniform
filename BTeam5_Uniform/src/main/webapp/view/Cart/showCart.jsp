@@ -143,7 +143,7 @@ User user = (User) session.getAttribute("user");
 						<div>E-mail</div>
 					</div>
 					<div>
-						<input type="text" name="mail" value="<%=email%>">
+						<input type="text" name="email" value="<%=email%>">
 					</div>
 					<span class="flex-indent"></span>
 					<div>
@@ -156,7 +156,17 @@ User user = (User) session.getAttribute("user");
 				</div>
 				<div class="flex-bottom">
 					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">ショッピングを続ける</a>
-					<input type="submit" value="これで注文する">
+					<% 
+					if(order_list == null || order_list.size() == 0){%>
+						<input type="submit" value="これで注文する" disabled />
+					<%
+					} else {
+						%>
+						<input type="submit" value="これで注文する">
+						<%
+					}
+					%>
+					
 				</div>
 			</form>
 		</center>

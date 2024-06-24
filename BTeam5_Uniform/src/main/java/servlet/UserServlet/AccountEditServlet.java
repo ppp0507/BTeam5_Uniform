@@ -1,3 +1,5 @@
+// 作成者: 屋比久
+
 package servlet.UserServlet;
 
 import java.io.IOException;
@@ -33,6 +35,9 @@ public class AccountEditServlet extends HttpServlet {
 		User afterUser = null;
 		
 		User user = (User)session.getAttribute("user");
+		
+		// フォワード先を指定する変数
+		String toForward = "/view/Common/error.jsp";
 		
 		try {
 			// 編集対象のユーザーのidを管理する変数
@@ -70,23 +75,51 @@ public class AccountEditServlet extends HttpServlet {
 
 			// 変更処理用のUserを作成
 			User changeUser = userDao.getUserbyId(id);
-			
-			// 変更前のユーザー情報を格納
-			beforeUser = new User();
-			beforeUser.setUsername(changeUser.getUsername());
-			beforeUser.setEmail(changeUser.getEmail());
-			beforeUser.setAddress(changeUser.getAddress());
-			
-			// 変更後のユーザー情報を格納
-			afterUser = new User();
-			afterUser.setUsername(name);
-			afterUser.setEmail(mail);
-			afterUser.setAddress(address);
-			
-			// 更新処理実行
-			userDao.update(changeUser, name, password, mail, address, authority_id);
-			
-			session.setAttribute("user", userDao.getUserbyId(id));
+
+			if (request.getParameter("cmd").equals("update")) {
+				// アカウント更新処理
+				
+				// エラー処理
+				if (name == null || mail == null || address == null) {
+					error = "無効なアクセスです";
+					return;
+				}
+				
+				// 変更前のユーザー情報を格納
+				beforeUser = new User();
+				beforeUser.setUsername(changeUser.getUsername());
+				beforeUser.setEmail(changeUser.getEmail());
+				beforeUser.setAddress(changeUser.getAddress());
+				
+				// 変更後のユーザー情報を格納
+				afterUser = new User();
+				afterUser.setUsername(name);
+				afterUser.setEmail(mail);
+				afterUser.setAddress(address);
+				
+				// 更新処理実行
+				userDao.update(changeUser, name, password, mail, address, authority_id);
+				
+				session.setAttribute("user", userDao.getUserbyId(user.getUserid()));
+				
+				// リクエストスコープに変更前後のUserオブジェクトを保存
+				request.setAttribute("before", beforeUser);
+				request.setAttribute("after", afterUser);
+				
+				toForward = "/view/User/accountEditCompleted.jsp";
+				
+			} else if (request.getParameter("cmd").equals("delete")) {
+				// アカウント削除処理
+				
+				// 削除処理実行
+				userDao.delete(changeUser.getEmail());
+				
+				// セッション情報の削除
+				session.setAttribute("user", null);
+				
+				toForward = "/view/Common/menu.jsp";
+				
+			}
 			
 		} catch (IllegalStateException e) {
 			// エラー処理
@@ -98,9 +131,7 @@ public class AccountEditServlet extends HttpServlet {
 		} finally {
 			if (error.length() == 0) {
 				// フォワード処理
-				request.setAttribute("before", beforeUser);
-				request.setAttribute("after", afterUser);
-				request.getRequestDispatcher("/view/User/accountEditCompleted.jsp").forward(request, response);
+				request.getRequestDispatcher(toForward).forward(request, response);
 			} else {
 				// エラー文をerrorという名前でリクエストスコープに保存
 				request.setAttribute("error", error);

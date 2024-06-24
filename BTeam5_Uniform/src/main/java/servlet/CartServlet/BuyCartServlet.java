@@ -24,6 +24,7 @@ import util.SendMail;
 public class BuyCartServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		//エンコードを設定
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
@@ -46,6 +47,8 @@ public class BuyCartServlet extends HttpServlet {
 		String mailText = "";
 		
 		HttpSession session = request.getSession();
+		
+		
 
 		try {
 			//注文者情報の変数
@@ -67,18 +70,30 @@ public class BuyCartServlet extends HttpServlet {
 
 			//ゲスト購入なら会員登録してuser_id貰う
 			else {
-				System.out.println("ゲスト");
+				
+		
 				name = request.getParameter("name");
 				address = request.getParameter("address");
 				email = request.getParameter("email");
-
+				//情報が入力されていない場合
+				if(name.equals("") || email.equals("") || address.equals("")) {
+					error="購入のための情報が正しく入力されていません。";
+					return;
+				}
 				userDao.insert(name, "", email, address);
 				user_id = userDao.selectByUser(email, "").getUserid();
 			}
-
+			
+			
 			//カートの商品情報取得
 			ArrayList<Order> order_list = (ArrayList<Order>) session.getAttribute("order_list");
 
+			//カートが空っぽの場合
+			if(order_list == null || order_list.size() == 0) {
+				error = "カートに商品がないため、注文が出来ませんでした。";
+				return;
+			}
+			
 			//order_listを巡回し、一つづつDBへ転送します。
 			for (Order i : order_list) {
 				Product product = productDao.getDetail(i.getProductid());
@@ -95,6 +110,9 @@ public class BuyCartServlet extends HttpServlet {
 			sendMail.setMailSubject("神田ユニフォーム注文受付のご案内");
 			sendMail.setReceiverAddress(email);
 			
+			//orderConfiremd.jspへ送るユーザーの名前
+			request.setAttribute("order_name", name);
+			
 			//メール送信
 			sendMail.sendMail();
 
@@ -103,12 +121,11 @@ public class BuyCartServlet extends HttpServlet {
 
 		}  catch (IllegalStateException e) {
 			error = "DB接続エラーの為、購入は出来ません。";
-
 		} finally {
 
 			if (error.equals("")) {
 				// フォワード処理
-				response.sendRedirect(request.getContextPath() + "/view/Common/menu.jsp");
+				request.getRequestDispatcher("/view/Order/orderConfirmed.jsp").forward(request, response);
 			} else {
 				// エラー文をerrorという名前でリクエストスコープに保存
 				request.setAttribute("error", error);

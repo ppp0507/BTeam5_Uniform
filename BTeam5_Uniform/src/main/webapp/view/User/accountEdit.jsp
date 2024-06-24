@@ -28,10 +28,16 @@
 	
 	if (user.getAuthority_id() == 1) {
 		// 管理者なら
-			
-		// パラメータ「id」からユーザーIDを取得
-		id = Integer.parseInt(request.getParameter("id"));
 		
+		if (request.getParameter("id") != null){
+			// パラメータ「id」がNULLでないなら
+			// パラメータ「id」からユーザーIDを取得
+			id = Integer.parseInt(request.getParameter("id"));
+		} else {
+			// NULLなら
+			// ログインしているIDを編集対象に指定
+			id = user.getUserid();
+		}
 		
 		// ユーザーIDからUserを取得
 		editUser = userDao.getUserbyId(id);
@@ -63,18 +69,23 @@
 
 <body>
 
+	<jsp:include page="/common/header.jsp">
+		<jsp:param name="headName">
+			<jsp:attribute name="value">
+				アカウント編集
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="nav">
+			<jsp:attribute name="value">
+					<div class="nav-padding">
+						<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
+						<a href="<%= request.getContextPath() %>/showCart">【カート確認】</a>
+					</div>
+			</jsp:attribute>
+		</jsp:param>
+	</jsp:include>
 	<main>
 	
-		<jsp:include page="/common/header.jsp">
-			<jsp:param name="nav">
-				<jsp:attribute name="value">
-						<div class="nav-padding">
-							<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
-							<a href="<%= request.getContextPath() %>/showCart">【カート確認】</a>
-						</div>
-				</jsp:attribute>
-			</jsp:param>
-		</jsp:include>
 	
 		<center>
 		
@@ -104,13 +115,22 @@
 
 				</div>
 				<div class="flex-bottom">
+					<form>
+					<input type="hidden" name="cmd" value="update">
 					<input type="submit" value="変更">
+					</form>
 					<% if (user.getAuthority_id() == 1) { %>
+					<form  action="<%= request.getContextPath() %>/accountEdit" method="GET">
+					<input type="hidden" name="cmd" value="delete">
 					<%-- 管理者なら --%>
 					<input type="submit" value="ユーザー削除">
+					</form>
 					<% } else if (user.getAuthority_id() == 2) { %>
+					<form action="<%= request.getContextPath() %>/accountEdit" method="GET">
+					<input type="hidden" name="cmd" value="delete">
 					<%-- 一般ユーザーなら --%>
 					<input type="submit" value="退会">
+					</form>
 					<% } %>
 				</div>
 			</form>
