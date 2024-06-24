@@ -110,7 +110,7 @@ public class UserDAO {
 		Connection con = null;
 		Statement smt = null;
 		int authority = 2;
-		if(password.equals("")) {
+		if (password.equals("")) {
 			authority = 3;
 		}
 		try {
@@ -118,7 +118,7 @@ public class UserDAO {
 			smt = con.createStatement();
 
 			String sql = "INSERT INTO user(name, password, email, address, authority_id) VALUES('" + name + "','"
-					+ password + "','" + email + "','" + address + "',"+authority+")";
+					+ password + "','" + email + "','" + address + "'," + authority + ")";
 
 			smt.executeQuery(sql);
 		}
@@ -144,7 +144,7 @@ public class UserDAO {
 		}
 
 	}
-	
+
 	//delete:DBからユーザーを削除(脱会)
 	public void delete(String email) {
 
@@ -159,7 +159,7 @@ public class UserDAO {
 			smt.executeUpdate(sql);
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
-		} 
+		}
 		//リソース解放
 		finally {
 			if (smt != null) {
@@ -176,24 +176,24 @@ public class UserDAO {
 			}
 		}
 	}
-	
+
 	//selectAll :全てのユーザーの一覧取得
 	public ArrayList<User> selectAll() {
-		
+
 		Connection con = null;
 		Statement smt = null;
-	
+
 		ArrayList<User> userList = new ArrayList<User>();
 
 		try {
 			con = getConnection();
 			smt = con.createStatement();
-			
+
 			//SQL文
 			String sql = "SELECT * FROM user ORDER BY id";
 			//rsに取得したデータ格納
 			ResultSet rs = smt.executeQuery(sql);
-			
+
 			//rsからデータ取り出し、User型オブジェクトでuserListに格納
 			while (rs.next()) {
 				User user = new User();
@@ -274,8 +274,51 @@ public class UserDAO {
 		}
 		return user;
 	}
-	
+
 	// update:指定されたUserオブジェクトのデータを更新
 	// 作成者: 屋比久
+	public int update(User user, String name, String password, String email, String address, int authority_id) {
+		Connection con = null;
+		Statement smt = null;
+
+		// レコードの更新数を格納する変数
+		int count = 0;
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			//SQL文
+			String sql = "UPDATE user SET name='" + name + "'," +
+					"password='" + password + "'," +
+					"email='" + email + "'," +
+					"address='" + address + "'," +
+					"authority_id=" + authority_id + " " +
+					"WHERE id=" + user.getUserid();
+
+			count = smt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+
+		//リソース解放
+		finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+
+		return count;
+	}
 
 }

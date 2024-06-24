@@ -1,8 +1,8 @@
 <%-- 作成者: 屋比久 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@page import="bean.User" %>
+	pageEncoding="UTF-8"%>
+<%@page import="bean.User"%>
 
 <%
 
@@ -18,21 +18,22 @@
 	}
 	
 %>
-    
+
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<link href="../../css/style.css" rel="stylesheet">
-		<title>Insert title here</title>
-	</head>
-	
-	<body>
-	
-	
+<head>
+<meta charset="UTF-8">
+<link href="<%=request.getContextPath()%>/css/style.css"
+	rel="stylesheet">
+<title>Insert title here</title>
+</head>
+
+<body>
+
+
 	<% if (user.getAuthority_id() == 1) { %>
 	<%-- 管理者の場合 --%>
-	
+
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
@@ -53,20 +54,26 @@
 			</jsp:attribute>
 		</jsp:param>
 	</jsp:include>
-	
-	    <main>
-			<center>
-				<div class="left-center-list link-button">
-					<div><a href="<%= request.getContextPath() %>/orderList">【注文一覧】</a></div>
-					<div><a href="<%= request.getContextPath() %>/productList">【商品一覧】</a></div>
-					<div><a href="<%= request.getContextPath() %>/userList">【ユーザ一一覧】</a></div>
+
+	<main>
+		<center>
+			<div class="left-center-list link-button">
+				<div>
+					<a href="<%= request.getContextPath() %>/orderList">【注文一覧】</a>
 				</div>
-			</center>
-	    </main>
-	    
+				<div>
+					<a href="<%= request.getContextPath() %>/productList">【商品一覧】</a>
+				</div>
+				<div>
+					<a href="<%= request.getContextPath() %>/userList">【ユーザ一一覧】</a>
+				</div>
+			</div>
+		</center>
+	</main>
+
 	<% } else if (user.getAuthority_id() == 2) { %>
 	<%-- 一般ユーザーの場合 --%>
-	
+
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
@@ -87,22 +94,30 @@
 			</jsp:attribute>
 		</jsp:param>
 	</jsp:include>
-	
-	
-	    <main>
-			<center>
-				<div class="left-center-list link-button">
-					<div><a href="<%= request.getContextPath() %>/productList">【商品ページ】</a></div>
-					<div><a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a></div>
-					<div><a href="<%= request.getContextPath() %>/orderHistory">【購入履歴】</a></div>
-					<div><a href="<%= request.getContextPath() %>/accountEdit">【アカウント編集】</a></div>
+
+
+	<main>
+		<center>
+			<div class="left-center-list link-button">
+				<div>
+					<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
 				</div>
-			</center>
-	    </main>
-	
+				<div>
+					<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
+				</div>
+				<div>
+					<a href="<%= request.getContextPath() %>/orderHistory">【購入履歴】</a>
+				</div>
+				<div>
+					<a href="<%= request.getContextPath() %>/accountEdit">【アカウント編集】</a>
+				</div>
+			</div>
+		</center>
+	</main>
+
 	<% } else if (user.getAuthority_id() == 3) { %>
 	<%-- ゲストの場合 --%>
-	
+
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
@@ -123,20 +138,30 @@
 			</jsp:attribute>
 		</jsp:param>
 	</jsp:include>
-	
-	
-	    <main>
-			<center>
-				<div class="left-center-list link-button">
-					<div><a href="<%= request.getContextPath() %>/productList">【商品ページ】</a></div>
-					<div><a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a></div>
-					<div><a href="../User/login.jsp">【ログイン】</a></div>
-					<div><a href="../User/signup.jsp">【アカウント作成】</a></div>
+
+
+	<main>
+		<center>
+			<div class="left-center-list link-button">
+				<div>
+					<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
 				</div>
-			</center>
-	    </main>
-	    
+				<div>
+					<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
+				</div>
+				<div>
+					<a href="../User/login.jsp">【ログイン】</a>
+				</div>
+				<div>
+					<a href="../User/signup.jsp">【アカウント作成】</a>
+				</div>
+			</div>
+		</center>
+	</main>
+
 	<% } %>
-	    
-	</body>
-</html>l>
+
+	<!-- ヘッダー -->
+	<%@ include file="/common/footer.jsp"%>
+</body>
+</html>

@@ -5,6 +5,7 @@
 <!-- @author 朴姻禹 -->
 <%
 ProductDAO productDao = new ProductDAO();
+User user = (User) session.getAttribute("user");
 %>
 
 <!DOCTYPE html>
@@ -17,15 +18,26 @@ ProductDAO productDao = new ProductDAO();
 <body>
 
 	<!-- ヘッダー -->
-	<%@ include file="/common/header.jsp"%>
-
-	<!-- メニュー移動 -->
-	<nav>
-		<div style="padding: 0.5em;">
-			<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">メニュー</a>
-			<a href>商品一覧</a> <span>これはnavです</span>
-		</div>
-	</nav>
+	<jsp:include page="/common/header.jsp">
+		<jsp:param name="title">
+			<jsp:attribute name="value">
+				タイトル
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="headName">
+			<jsp:attribute name="value">
+				ページに表示するタイトル
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="nav">
+			<jsp:attribute name="value">
+					<div class="nav-padding">
+					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">【メニュー】</a>
+					<a href="<%=request.getContextPath()%>/productList">【商品ページ】</a>	
+					</div>
+			</jsp:attribute>
+		</jsp:param>
+	</jsp:include>
 
 	<!-- メインコンテンツ(本文) -->
 	<main>
@@ -45,27 +57,28 @@ ProductDAO productDao = new ProductDAO();
 					if (order_list != null) {
 						//for文start
 						for (int i = 0; i < order_list.size(); i++) {
-							
+
 							Order order = (Order) order_list.get(i);
 							int id = order.getProductid();
-							
+
 							//DBから商品の情報取得
 							Product product = productDao.getDetail(id);
-							
+
 							//DBに存在する商品か確認
-							if(product.getId() == 0){
-								request.getRequestDispatcher("/deleteCart?i="+i).forward(request, response);
-							};
-							
+							if (product.getId() == 0) {
+						request.getRequestDispatcher("/deleteCart?i=" + i).forward(request, response);
+							}
+							;
+
 							String name = product.getName();
-							int quantity =order.getQuantity();
+							int quantity = order.getQuantity();
 							int price = product.getPrice();
-							
+
 							//DBの在庫チェック
 							if (product.getStock() < order.getQuantity()) {
-								order.setQuantity(product.getStock());
-								order_list.set(i,order);
-								quantity = order.getQuantity();
+						order.setQuantity(product.getStock());
+						order_list.set(i, order);
+						quantity = order.getQuantity();
 							}
 					%>
 					<tr>
@@ -75,12 +88,12 @@ ProductDAO productDao = new ProductDAO();
 						<td><a
 							href="<%=request.getContextPath()%>/deleteCart?i=<%=i%>">カートから削除</a></td>
 					</tr>
-						<%
-						}
-				//for文end
-					
+					<%
 					}
-				//if文end
+					//for文end
+
+					}
+					//if文end
 
 					else {
 					%>
@@ -89,34 +102,27 @@ ProductDAO productDao = new ProductDAO();
 					}
 					%>
 				</table>
-				<span>取り扱いのない商品はカートから自動的に削除されます。</span>
-				<br>
-				<span>在庫数に合わせてカート内の数量が変更されます。</span>
+				<span>取り扱いのない商品はカートから自動的に削除されます。</span> <br> <span>在庫数に合わせてカート内の数量が変更されます。</span>
 			</div>
 
 			<br> <br> <br>
 			<h3>購入情報入力</h3>
-			<span>ログイン中の場合、お客様の登録情報をデフォルト配送先で設定しております。</span>
-			<br>
-			<span>
-			ログインせずに購入する場合、下のフォームから情報の入力をお願いします。 </span>
+			<span>ログイン中の場合、お客様の登録情報をデフォルト配送先で設定しております。</span> <br> <span>
+				ログインせずに購入する場合、下のフォームから情報の入力をお願いします。 </span>
 			<%
+			//注文情報:name,user_id,address,comment
+			String name = "";
+			String address = "";
+			String email = "";
+			String comment = "";
 
-				
-				//注文情報:name,user_id,address,comment
-				String name="";
-				String address="";
-				String email="";
-				String comment="";
-				
-				if (user.getAuthority_id() == 2){
-					name = user.getUsername();
-					address = user.getAddress();
-					email = user.getEmail();
-				}
-		
+			if (user != null && user.getAuthority_id() == 2) {
+				name = user.getUsername();
+				address = user.getAddress();
+				email = user.getEmail();
+			}
 			%>
-			<form action="<%= request.getContextPath()%>/buyCart" method="POST">
+			<form action="<%=request.getContextPath()%>/buyCart" method="POST">
 				<div class="center-flex" style="border: solid 1px gray">
 					<div>
 						<div>お名前</div>
@@ -129,7 +135,7 @@ ProductDAO productDao = new ProductDAO();
 						<div>配送先住所</div>
 					</div>
 					<div>
-						<textarea name="address" cols="50" rows="5" maxlength="256"></textarea>
+						<textarea name="address" cols="50" rows="5" maxlength="256"><%=address%></textarea>
 					</div>
 					<span class="flex-indent"></span>
 
@@ -149,8 +155,8 @@ ProductDAO productDao = new ProductDAO();
 					<span class="flex-indent"></span>
 				</div>
 				<div class="flex-bottom">
-				<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">ショッピングを続ける</a>
-				<input type="submit" value="これで注文する">
+					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">ショッピングを続ける</a>
+					<input type="submit" value="これで注文する">
 				</div>
 			</form>
 		</center>
