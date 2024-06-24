@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.Order;
+import bean.Product;
+import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,10 +19,13 @@ public class InsertIntoCartServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		//エラーメッセージ格納
-		String errormsg = "";
+		String error = "";
 
 		//エンコードを設定
 		request.setCharacterEncoding("UTF-8");
+
+		//ProductDAO インスタンス化
+		ProductDAO productDao = new ProductDAO();
 
 		//セッション定義
 		HttpSession session = request.getSession();
@@ -29,6 +34,14 @@ public class InsertIntoCartServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 
 		try {
+			//DBから一致するIDの商品情報を取得
+			Product product = productDao.getDetail(id);
+			
+			//DBから商品が存在するか確認
+			if(product.getId() == 0) {
+				error = "DBに商品が存在しません。";
+				return;
+			}
 
 			Order order = new Order();
 
@@ -42,7 +55,7 @@ public class InsertIntoCartServlet extends HttpServlet {
 				order.setQuantity(1);
 				order_list.add(order);
 			}
-			
+
 			//セッションにlistが既にある⇒商品もすでにあるか確認
 			else {
 				boolean productAlreadyExist = false;
@@ -50,12 +63,23 @@ public class InsertIntoCartServlet extends HttpServlet {
 				//order_listに既に同じ商品あるか確認
 				for (Order i : order_list) {
 					if (i.getProductid() == id) {
-						i.setQuantity(i.getQuantity() + 1);
+						
 						productAlreadyExist = true;
+						//DBで在庫確認
+						if (product.getStock() < i.getQuantity() + 1) {
+							error = "ご希望の数量が在庫より多いため、カートに追加できません。";
+							return;
+						}
+						i.setQuantity(i.getQuantity() + 1);
 						break;
 					}
 				}
 				if (!productAlreadyExist) {
+					//DBで在庫確認
+				    if(product.getStock() < 1 ) {
+				    	error = "ご希望の数量が在庫より多いため、カートに追加できません。";
+				    	return;
+				    }
 					order.setProductid(id);
 					order.setQuantity(1);
 					order_list.add(order);
@@ -68,19 +92,19 @@ public class InsertIntoCartServlet extends HttpServlet {
 		}
 		//もしDB接続エラー起きたら
 		catch (IllegalStateException e) {
-			errormsg = "DB接続エラーの為、処理は行えませんでした。";
+			error = "DB接続エラーの為、処理は行えませんでした。";
 		}
 
 		finally {
 			//エラーがない⇒フォワード
-			if (errormsg.equals("")) {
+			if (error.equals("")) {
 				request.getRequestDispatcher("/view/Cart/showCart.jsp").forward(request, response);
 			}
 
 			//エラーがあったためエラーページへフォワード
 			else {
-				request.setAttribute("errormsg", errormsg);
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("/view/Common/error.jsp").forward(request, response);
 			}
 
 		}

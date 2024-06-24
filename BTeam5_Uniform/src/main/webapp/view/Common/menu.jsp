@@ -48,7 +48,7 @@
 			<jsp:attribute name="value">
 					<div class="nav-padding">
 						<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
-						<a href="<%= request.getContextPath() %>/showCart">【カート確認】</a>
+						<a href="/view/Cart/showCart.jsp">【カート確認】</a>
 					</div>
 			</jsp:attribute>
 		</jsp:param>
@@ -82,7 +82,7 @@
 			<jsp:attribute name="value">
 					<div class="nav-padding">
 						<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
-						<a href="<%= request.getContextPath() %>/showCart">【カート確認】</a>
+						<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
 					</div>
 			</jsp:attribute>
 		</jsp:param>
@@ -93,7 +93,7 @@
 			<center>
 				<div class="left-center-list link-button">
 					<div><a href="<%= request.getContextPath() %>/productList">【商品ページ】</a></div>
-					<div><a href="<%= request.getContextPath() %>/showCart">【カート確認】</a></div>
+					<div><a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a></div>
 					<div><a href="<%= request.getContextPath() %>/orderHistory">【購入履歴】</a></div>
 					<div><a href="<%= request.getContextPath() %>/accountEdit">【アカウント編集】</a></div>
 				</div>
@@ -118,7 +118,7 @@
 			<jsp:attribute name="value">
 					<div class="nav-padding">
 						<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
-						<a href="<%= request.getContextPath() %>/showCart">【カート確認】</a>
+						<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
 					</div>
 			</jsp:attribute>
 		</jsp:param>
@@ -129,7 +129,7 @@
 			<center>
 				<div class="left-center-list link-button">
 					<div><a href="<%= request.getContextPath() %>/productList">【商品ページ】</a></div>
-					<div><a href="<%= request.getContextPath() %>/showCart">【カート確認】</a></div>
+					<div><a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a></div>
 					<div><a href="../User/login.jsp">【ログイン】</a></div>
 					<div><a href="../User/signup.jsp">【アカウント作成】</a></div>
 				</div>

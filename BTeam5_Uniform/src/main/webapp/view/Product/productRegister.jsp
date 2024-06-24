@@ -14,7 +14,7 @@ if (user == null){
 	//インスタンス変数 userid, password, email, authority の初期化
 	user = new User();
 	user.setUsername("ゲスト");
-	user.setAuthority_id(1);
+	user.setAuthority_id(3);
 }
 	
 %>

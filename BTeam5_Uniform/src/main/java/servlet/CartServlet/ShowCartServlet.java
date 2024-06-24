@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
  * 
  * showCart.jspに機能入れすぎちゃって現在showCartServletなくてもカート見れます。
  */
-@WebServlet("/showCart")
+@WebServlet("/howCart")
 public class ShowCartServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
