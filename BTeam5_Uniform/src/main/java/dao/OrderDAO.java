@@ -244,9 +244,15 @@ public class OrderDAO {
 		}
 	}
 
-	//insert : 新しい注文登録
-	// 注文日付は nowDateが自動的に設定されます。
-	// 発送状況は'未発送'、入金状況は'入金待ち'がデフォルト
+	/**
+	 * insert : 新しい注文登録
+	 * 注文日付は nowDateが自動的に設定されます。
+	 * 発送状況は'未発送'、入金状況は'入金待ち'がデフォルト
+	 * @param user_id
+	 * @param product_id
+	 * @param quantity
+	 * @param comment
+	 */
 	public void insert(int user_id, int product_id, int quantity,
 			 String comment) {
 

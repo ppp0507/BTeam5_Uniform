@@ -21,6 +21,13 @@ import bean.User;
  * 
  * selectAll :全てのユーザーの一覧取得
  * ⇒userlist で使ってください
+ * 
+ * getUserbyId:IDの一致するユーザーの取得
+ * ⇒屋比久作成 accountEdit.jspで利用しています
+ *  
+ * update:指定されたUserオブジェクトのデータを更新
+ * ⇒屋比久作成 AccountEditServlet.javaで利用しています
+ * 
  */
 
 public class UserDAO {
@@ -90,19 +97,30 @@ public class UserDAO {
 		return user;
 	}
 
-	//insert:DBに新しいユーザーを登録
+	/**
+	 * insert:DBに新しいユーザーを登録
+	 * passwordの値でゲスト登録か、一般登録かを分岐させます
+	 * password == "" ならゲスト(権限:3)
+	 * @param name
+	 * @param password
+	 * @param email
+	 * @param address
+	 */
 	public void insert(String name, String password, String email, String address) {
 		Connection con = null;
 		Statement smt = null;
-
+		int authority = 2;
+		if(password.equals("")) {
+			authority = 3;
+		}
 		try {
 			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "INSERT INTO user(name, password, email, address, authority_id) VALUES('" + name + "','"
-					+ password + "','" + email + "','" + address + "',2)";
+					+ password + "','" + email + "','" + address + "',"+authority+")";
 
-			smt.executeUpdate(sql);
+			smt.executeQuery(sql);
 		}
 
 		catch (Exception e) {
@@ -208,5 +226,56 @@ public class UserDAO {
 		}
 		return userList;
 	}
+
+	// getUserbyId:DBのuserからidが一致するデータを取得
+	// 作成者: 屋比久
+	public User getUserbyId(int id) {
+		Connection con = null;
+		Statement smt = null;
+
+		User user = new User();
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			//SQL文
+			String sql = "SELECT * FROM user WHERE id = " + id;
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//rsから取得したデータをuserオブジェクトに格納
+			if (rs.next()) {
+				user.setUserid(rs.getInt("id"));
+				user.setUsername(rs.getString("name"));
+				user.setPassword(rs.getString("password"));
+				user.setEmail(rs.getString("email"));
+				user.setAddress(rs.getString("address"));
+				user.setAuthority_id(rs.getInt("authority_id"));
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+
+		//リソース解放
+		finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return user;
+	}
+	
+	// update:指定されたUserオブジェクトのデータを更新
+	// 作成者: 屋比久
 
 }

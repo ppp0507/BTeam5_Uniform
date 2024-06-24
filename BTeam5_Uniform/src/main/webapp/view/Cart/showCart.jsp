@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page
-	import="java.util.ArrayList,bean.Order,bean.Product,dao.ProductDAO"%>
+	import="java.util.ArrayList,bean.User,bean.Order,bean.Product,dao.ProductDAO"%>
 <!-- @author 朴姻禹 -->
 <%
 ProductDAO productDao = new ProductDAO();
@@ -69,7 +69,7 @@ ProductDAO productDao = new ProductDAO();
 							}
 					%>
 					<tr>
-						<td><%=product.getId()%></td>
+						<td><%=name%></td>
 						<td><%=quantity%></td>
 						<td><%=price%>円 * <%=quantity%> = <%=price * quantity%>円</td>
 						<td><a
@@ -84,35 +84,52 @@ ProductDAO productDao = new ProductDAO();
 
 					else {
 					%>
-					<span>カートに商品が存在しません。</span>
+					<h4>カートに商品が存在しません。</h4>
 					<%
 					}
 					%>
 				</table>
 				<span>取り扱いのない商品はカートから自動的に削除されます。</span>
+				<br>
+				<span>在庫数に合わせてカート内の数量が変更されます。</span>
 			</div>
 
 			<br> <br> <br>
 			<h3>購入情報入力</h3>
-			<span>お客様の情報をデフォルトで設定しております。</span> <br> <span>
-				違う配送先への発送をご希望の場合、下のフォームから修正お願いします。 </span>
+			<span>ログイン中の場合、お客様の登録情報をデフォルト配送先で設定しております。</span>
+			<br>
+			<span>
+			ログインせずに購入する場合、下のフォームから情報の入力をお願いします。 </span>
+			<%
 
-			<form>
+				
+				//注文情報:name,user_id,address,comment
+				String name="";
+				String address="";
+				String email="";
+				String comment="";
+				
+				if (user.getAuthority_id() == 2){
+					name = user.getUsername();
+					address = user.getAddress();
+					email = user.getEmail();
+				}
+		
+			%>
+			<form action="<%= request.getContextPath()%>/buyCart" method="POST">
 				<div class="center-flex" style="border: solid 1px gray">
-
 					<div>
 						<div>お名前</div>
 					</div>
 					<div>
-						<input type="text" name="name">
+						<input type="text" name="name" value="<%=name%>">
 					</div>
 					<span class="flex-indent"></span>
-
 					<div>
 						<div>配送先住所</div>
 					</div>
 					<div>
-						<input type="text" name="address">
+						<textarea name="address" cols="50" rows="5" maxlength="256"></textarea>
 					</div>
 					<span class="flex-indent"></span>
 
@@ -120,22 +137,20 @@ ProductDAO productDao = new ProductDAO();
 						<div>E-mail</div>
 					</div>
 					<div>
-						<input type="text" name="mail">
+						<input type="text" name="mail" value="<%=email%>">
 					</div>
 					<span class="flex-indent"></span>
-
 					<div>
-						<div>電話番号</div>
+						<div>備考欄</div>
 					</div>
 					<div>
-						<input type="text" name="phone">
+						<textarea name="comment" cols="50" rows="5" maxlength="200"></textarea>
 					</div>
 					<span class="flex-indent"></span>
-
 				</div>
 				<div class="flex-bottom">
-					<input type="submit" value="ショッピングを続ける"> <input
-						type="submit" value="これで注文する">
+				<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">ショッピングを続ける</a>
+				<input type="submit" value="これで注文する">
 				</div>
 			</form>
 		</center>
