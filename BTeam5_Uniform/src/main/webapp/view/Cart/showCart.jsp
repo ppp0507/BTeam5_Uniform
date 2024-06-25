@@ -52,6 +52,9 @@ User user = (User) session.getAttribute("user");
 						<th></th>
 					</tr>
 					<%
+					//合計金額を格納する変数
+					int totalprice = 0;
+					
 					//セッションから"order_list"のList配列を取得
 					ArrayList<Order> order_list = (ArrayList<Order>) session.getAttribute("order_list");
 					if (order_list != null) {
@@ -80,6 +83,8 @@ User user = (User) session.getAttribute("user");
 						order_list.set(i, order);
 						quantity = order.getQuantity();
 							}
+							
+						totalprice += price * quantity;
 					%>
 					<tr>
 						<td><%=name%></td>
@@ -91,7 +96,9 @@ User user = (User) session.getAttribute("user");
 					<%
 					}
 					//for文end
-
+					%>
+					
+					<%
 					}
 					//if文end
 
@@ -102,6 +109,8 @@ User user = (User) session.getAttribute("user");
 					}
 					%>
 				</table>
+				<div><h3>合計金額:<%=totalprice %></h3></div>
+				<br>
 				<span>取り扱いのない商品はカートから自動的に削除されます。</span> <br> <span>在庫数に合わせてカート内の数量が変更されます。</span>
 			</div>
 

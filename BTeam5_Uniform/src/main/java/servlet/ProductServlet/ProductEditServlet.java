@@ -28,9 +28,7 @@ public class ProductEditServlet extends HttpServlet {
 			//商品ID取得
 			//productEdit.jspの商品IDパラメータを取得
 			int id = Integer.parseInt(request.getParameter("id"));
-
-			//商品名を取得
-			//productEdit.jspの商品名パラメータを取得
+			
 			String name = request.getParameter("name");
 
 			//商品名が空文字の場合
@@ -84,9 +82,6 @@ public class ProductEditServlet extends HttpServlet {
 			//ProductDAOのメソッドを使用してDBの情報を更新(写真URLはnull)
 			productDao.editDetail(id, name, price2, stock2, null);
 
-			//productList.jspに処理を遷移
-			request.getRequestDispatcher("/view/Product/productList.jsp").forward(request, response);
-
 		}catch(IllegalStateException e) {
 			//DB接続エラーが発生した場合
 			error = "DB接続エラーのため、商品を編集できませんでした。";
@@ -103,6 +98,10 @@ public class ProductEditServlet extends HttpServlet {
 
 				//error.jspに処理を遷移
 				request.getRequestDispatcher("view/Common/error.jsp").forward(request, response);
+			}
+			//エラー発生しなかった場合
+			else {
+				request.getRequestDispatcher("/productList").forward(request, response);
 			}
 
 		}

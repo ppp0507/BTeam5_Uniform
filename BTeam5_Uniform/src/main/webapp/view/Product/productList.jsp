@@ -51,22 +51,7 @@ ArrayList<Product> productList =(ArrayList<Product>)request.getAttribute("produc
 			
 			<% if (loginUser.getAuthority_id() == 1) { %>
 			
-			<div style="margin-bottom: 250px">
-				<table style="margin: auto">
-					<tr>
-						<td>
-							<form action="<%=request.getContextPath()%>/search">
-								<input type=text size="30" name=“day”></input><input type="submit" name="search" value="検索"></input>
-							</form>
-						</td>
-						<td>
-							<form action="<%=request.getContextPath()%>/productList">
-								<input type="submit" name="searchall" value="全件表示"></input>
-							</form>
-						</td>
-					</tr>
-				</table>
-				
+			<div style="margin-bottom: 250px">				
 				
 				<table style="margin: auto">
 					<tr>
@@ -93,7 +78,9 @@ ArrayList<Product> productList =(ArrayList<Product>)request.getAttribute("produc
 									<td style="text-align: center; width: 200px"><%= products.getPrice() %></td>
 									<td style="text-align: center; width: 200px"><%= products.getStock()%></td>
 									<td style="text-align: center; width: 200px"><%= products.getImage_url()%></td>
-									<td style="text-align: center; width: 125px"><a href="<%= request.getContextPath() %>/productEdit?id=<%= products.getId()%>&cmd=update">編集</a></td>
+									<td style="text-align: center; width: 125px">
+									<a href="<%=request.getContextPath()%>/view/Product/productEdit.jsp?product_id=<%=products.getId()%>">編集</a>
+									</td>
 								</tr>
 							
 							<%
@@ -101,6 +88,7 @@ ArrayList<Product> productList =(ArrayList<Product>)request.getAttribute("produc
 						}
 					%>
 				</table>
+				[<a href="<%=request.getContextPath()%>/view/Product/productRegister.jsp">商品登録</a>]
 			</div>
 			
 			<% } else if (loginUser.getAuthority_id() == 2 || loginUser.getAuthority_id() == 3) { %>

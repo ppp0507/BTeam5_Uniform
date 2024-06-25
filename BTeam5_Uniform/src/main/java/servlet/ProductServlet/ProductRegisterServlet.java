@@ -41,7 +41,7 @@ public class ProductRegisterServlet extends HttpServlet {
 		} finally {
 			if (error.length() == 0) {
 				// フォワード処理
-				response.sendRedirect(request.getContextPath() + "/view/Common/menu.jsp");
+				request.getRequestDispatcher("/productList").forward(request, response);
 			} else {
 				// エラー文をerrorという名前でリクエストスコープに保存
 				request.setAttribute("error", error);

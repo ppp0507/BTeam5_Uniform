@@ -54,7 +54,7 @@ public class OrderDetailServlet extends HttpServlet {
 			if (error.length() == 0) {
 				// フォワード処理
 				request.setAttribute("order", order);
-				request.getRequestDispatcher("/view/Product/orderDetail.jsp").forward(request, response);
+				request.getRequestDispatcher("/view/Order/orderDetail.jsp").forward(request, response);
 			} else {
 				// エラー文をerrorという名前でリクエストスコープに保存
 				request.setAttribute("error", error);

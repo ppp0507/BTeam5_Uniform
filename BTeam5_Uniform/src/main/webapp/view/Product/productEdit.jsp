@@ -60,8 +60,22 @@ try {
 	<!-- ブラウザ全体 -->
 	<div id="wrap">
 
-		<!-- ヘッダー:今ログインしているユーザー表示　-->
-		<%@ include file="/common/header.jsp"%>
+		<!-- ヘッダー:今ログインしているユーザー表示-->
+		<jsp:include page="/common/header.jsp">
+			<jsp:param name="headName">
+				<jsp:attribute name="value">
+					商品一覧
+				</jsp:attribute>
+			</jsp:param>
+			<jsp:param name="nav">
+				<jsp:attribute name="value">
+						<div class="nav-padding">
+							<a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー画面】</a>
+							<a href="<%= request.getContextPath() %>/productList">【商品一覧】</a>
+						</div>
+				</jsp:attribute>
+			</jsp:param>
+		</jsp:include>
 
 		<!-- メインコンテンツ(本文) -->
 		<main>
