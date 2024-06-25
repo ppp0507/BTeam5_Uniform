@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*,bean.Order,dao.ProductDAO" %>
+<%@ page import="java.util.*,bean.Order,dao.ProductDAO,bean.User" %>
 
 <%
 ArrayList<Order> orderList = (ArrayList<Order>)request.getAttribute("orderList");
 ProductDAO productDao = new ProductDAO();
+User user = (User) session.getAttribute("user");
 %>
 
 <!DOCTYPE html>
@@ -18,22 +19,30 @@ ProductDAO productDao = new ProductDAO();
 </head>
 <body>
     <!-- ヘッダー:今ログインしているユーザー表示　-->
-	<%@ include file="/common/header.jsp"%>
+	<jsp:include page="/common/header.jsp">
+		<jsp:param name="title">
+			<jsp:attribute name="value">
+				タイトル
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="headName">
+			<jsp:attribute name="value">
+				<%=user.getUsername()%>様の注文履歴
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="nav">
+			<jsp:attribute name="value">
+					<div class="nav-padding">
+					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">【メニュー】</a>
+					<a href="<%=request.getContextPath()%>/productList">【商品ページ】</a>	
+					</div>
+			</jsp:attribute>
+		</jsp:param>
+	</jsp:include>
 
     <!-- メインコンテンツ(本文) -->
     <main>
 		<center>
-			<div>
-				<form>
-					<div>
-						<button class="blue-input-button">新着順</button>
-						<button class="blue-input-button">古い順</button>
-					</div>
-					<input type="date">から
-					<input type="date">までの注文を表示
-					<input type="submit" value="検索" class="blue-input-button">
-				</form>
-			</div>
 			<div>
 				<table border="1" class="table-padding solid-table" style="margin: 2em;">
 					<tr>
@@ -113,7 +122,11 @@ ProductDAO productDao = new ProductDAO();
 					</tr>
 				<%
 					}
-				}
+				} else { %>
+				
+				<h3>注文がありません。</h3>
+					
+				<% }
 				%>	
 				</table>
 			</div>

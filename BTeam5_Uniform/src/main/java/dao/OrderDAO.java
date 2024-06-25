@@ -236,7 +236,7 @@ public class OrderDAO {
 			smt = con.createStatement();
 
 			//SQL文発行
-			String sql = "SELECT * FROM orderinfo WHERE user_id =" + user_id + " ORDER BY date";
+			String sql = "SELECT * FROM orderinfo WHERE user_id =" + user_id + " ORDER BY date desc";
 
 			ResultSet rs = smt.executeQuery(sql);
 

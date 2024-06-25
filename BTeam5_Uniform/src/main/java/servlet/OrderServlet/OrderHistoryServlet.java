@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.Order;
+import bean.User;
 import dao.OrderDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * @author 猪瀬大貴
@@ -25,13 +27,21 @@ public class OrderHistoryServlet extends HttpServlet {
 
 		//遷移先を決める変数cmdを宣言
 		String cmd = null;
+		
+		// セッションからユーザー情報を取得
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		
+		//userID 取得
+		int id = user.getUserid();
+		System.out.println("param id です" + id);
 
 		try {
 			//OrderDAOオブジェクトを作成
 			OrderDAO orderDao = new OrderDAO();
 
 			//DAOクラスのメソッドを使い全注文リストを取得
-			ArrayList<Order> orderList = orderDao.selectAll();
+			ArrayList<Order> orderList = orderDao.selectByUser(id);
 
 			//全注文リストをリクエストスコープに登録
 			request.setAttribute("orderList", orderList);

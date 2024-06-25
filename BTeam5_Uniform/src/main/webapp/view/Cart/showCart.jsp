@@ -134,8 +134,8 @@ User user = (User) session.getAttribute("user");
 					<div>
 						<div>配送先住所</div>
 					</div>
-					<div>
-						<textarea name="address" cols="50" rows="5" maxlength="256"><%=address%></textarea>
+					<div style="width: 0">
+						<textarea name="address" cols="50" rows="5" maxlength="256" style="width: 90%"><%=address%></textarea>
 					</div>
 					<span class="flex-indent"></span>
 
@@ -149,8 +149,8 @@ User user = (User) session.getAttribute("user");
 					<div>
 						<div>備考欄</div>
 					</div>
-					<div>
-						<textarea name="comment" cols="50" rows="5" maxlength="200"></textarea>
+					<div style="width: 0">
+						<textarea name="comment" cols="50" rows="5" maxlength="200" style="width: 90%"></textarea>
 					</div>
 					<span class="flex-indent"></span>
 				</div>
