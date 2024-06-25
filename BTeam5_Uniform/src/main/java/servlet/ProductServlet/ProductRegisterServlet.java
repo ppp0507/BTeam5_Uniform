@@ -17,6 +17,9 @@ public class ProductRegisterServlet extends HttpServlet {
 		
 		// エラー文を格納する変数
 		String error = "";
+		String name = null;
+		int price =0;
+		int stock =0;
 		
 		// 商品へのアクセスを提供するDAO
 		ProductDAO productDao = new ProductDAO();
@@ -24,20 +27,31 @@ public class ProductRegisterServlet extends HttpServlet {
 		try {
 			
 			// フォームから送信された値を取得
-			String name = request.getParameter("name");
-			int price = Integer.parseInt(request.getParameter("price"));
-			int stock = Integer.parseInt(request.getParameter("stock"));
+			name = request.getParameter("name");
+			price = Integer.parseInt(request.getParameter("price"));
+			stock = Integer.parseInt(request.getParameter("stock"));
 			
-			// 画像の登録機能は実装していないのでNULLを代わりに代入
-			productDao.insert(name, price, stock, null);
+	
+				// 画像の登録機能は実装していないのでNULLを代わりに代入
+				productDao.insert(name, price, stock, null);
+
 			
 		} catch (IllegalStateException e) {
 			// エラー処理
 			error = "DB接続エラーの為、一覧表示はできませんでした。";
 			e.printStackTrace();
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。<br>" + e;
-			e.printStackTrace();
+			if(name.equals("")) {
+
+				error = "商品名を入力してください。";
+				return;
+			}else if(price == 0){
+				error = "金額を入力してください。";
+				return;
+			}else if(stock == 0){
+				error = "個数を入力してください。";
+				return;
+			}
 		} finally {
 			if (error.length() == 0) {
 				// フォワード処理

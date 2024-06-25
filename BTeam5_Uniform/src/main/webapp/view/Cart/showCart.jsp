@@ -164,7 +164,7 @@ User user = (User) session.getAttribute("user");
 					<span class="flex-indent"></span>
 				</div>
 				<div class="flex-bottom">
-					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">ショッピングを続ける</a>
+					<a href="<%=request.getContextPath()%>/productList">ショッピングを続ける</a>
 					<% 
 					if(order_list == null || order_list.size() == 0){%>
 						<input type="submit" value="これで注文する" disabled />

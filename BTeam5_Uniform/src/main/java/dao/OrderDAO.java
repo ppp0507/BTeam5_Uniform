@@ -30,6 +30,9 @@ import bean.Order;
  * insert : 新しい注文登録
  * ⇒ ProductRegisterServlet.javaで使ってください
  * 
+ * deleteOrdersByUser_id(int user_id) : 指定したユーザ一idに紐づいたOrderの削除
+ * ⇒作成者: 屋比久,AccountEditServletで使っています
+ * 
  */
 
 public class OrderDAO {
@@ -416,6 +419,45 @@ public class OrderDAO {
 			}
 		}
 	}
-	
+
+	// deleteOrdersByUser_id(int user_id) : 指定したユーザ一idに紐づいたOrderの削除
+	// ユーザ一idが必要。結果なし時の返り値: 0
+	// 作成者: 屋比久
+	public int deleteOrdersByUser_id(int user_id) {
+
+		Connection con = null;
+		Statement smt = null;
+		
+		// return用の変数
+		int count = 0;
+		
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			//SQL文発行
+			String sql = "DELETE FROM orderinfo WHERE user_id =" + user_id;
+			count = smt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+		//リソース解放
+		finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return count;
+	}
 	
 }

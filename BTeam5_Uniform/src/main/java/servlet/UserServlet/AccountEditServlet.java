@@ -5,6 +5,7 @@ package servlet.UserServlet;
 import java.io.IOException;
 
 import bean.User;
+import dao.OrderDAO;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -111,7 +112,11 @@ public class AccountEditServlet extends HttpServlet {
 			} else if (request.getParameter("cmd").equals("delete")) {
 				// アカウント削除処理
 				
+				// Foreign key制約があるので先にOrderを削除する為にDAOを生成
+				OrderDAO orderDao = new OrderDAO();
+				
 				// 削除処理実行
+				orderDao.deleteOrdersByUser_id(changeUser.getUserid());
 				userDao.delete(changeUser.getEmail());
 				
 				// セッション情報の削除

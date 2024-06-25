@@ -64,7 +64,7 @@ User user = (User)session.getAttribute("user");
 								<td><%=userElement.getUsername()%></td>
 								<td><%=userElement.getAddress()%></td>
 								<td><a
-									href="<%=request.getContextPath()%>/userDetail?Userid=<%=user.getUserid()%>&cmd=detail">詳細</a>
+									href="<%=request.getContextPath()%>/userDetail?Userid=<%=userElement.getUserid()%>&cmd=detail">詳細</a>
 								</td>
 
 							</tr>
