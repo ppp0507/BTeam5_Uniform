@@ -26,7 +26,7 @@ User user = (User) session.getAttribute("user");
 		</jsp:param>
 		<jsp:param name="headName">
 			<jsp:attribute name="value">
-				ページに表示するタイトル
+				カート確認
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="nav">

@@ -16,6 +16,8 @@ import bean.Order;
  * selectAll : 全体の注意リストを取得
  * ⇒ orderListで使ってください
  * 
+ * selectByDate : 全体の注文リストから特定の期間の注文だけ取得
+ * 
  * selectByUser : 特定ユーザーの注文だけ取得
  * ⇒ orderHistory.jsp, OrderHistoryServletで使ってください
  * 
@@ -50,8 +52,14 @@ public class OrderDAO {
 		}
 	}
 
-	//selectAll : 全体の注意リストを取得
-	//表示は 最新の注文からになります。時間余ったら逆も作ります。
+	/**
+	 * selectAll : 全体の注意リストを取得
+	 * @return ArrayList<Order>
+	 * @param String
+	 * 引数なし=新着順
+	 * 引数に"Asc"=古い順 (String型なら何入れても古い順取得します。"a"でもok)
+	 */
+	
 	public ArrayList<Order> selectAll() {
 		Connection con = null;
 		Statement smt = null;
@@ -63,7 +71,7 @@ public class OrderDAO {
 			smt = con.createStatement();
 
 			//SQL文発行
-			String sql = "SELECT * FROM orderinfo ORDER BY date";
+			String sql = "SELECT * FROM orderinfo ORDER BY date DESC";
 			ResultSet rs = smt.executeQuery(sql);
 
 			//rsからデータ取り出し、OrderListへ格納
@@ -87,6 +95,118 @@ public class OrderDAO {
 		}
 		//リソース解放
 		finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return OrderList;
+	}
+	
+	public ArrayList<Order> selectAll(String Asc) {
+		Connection con = null;
+		Statement smt = null;
+
+		ArrayList<Order> OrderList = new ArrayList<Order>();
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			//SQL文発行
+			String sql = "SELECT * FROM orderinfo ORDER BY date Asc";
+			ResultSet rs = smt.executeQuery(sql);
+
+			//rsからデータ取り出し、OrderListへ格納
+			while (rs.next()) {
+				Order order = new Order();
+
+				order.setId(rs.getInt("id"));
+				order.setUserid(rs.getInt("user_id"));
+				order.setProductid(rs.getInt("product_id"));
+				order.setDate(rs.getString("date"));
+				order.setQuantity(rs.getInt("quantity"));
+				order.setDeliveryStateId(rs.getInt("delivery_state_id"));
+				order.setIsPayment(rs.getBoolean("is_payment"));
+				order.setComment(rs.getString("comment"));
+
+				OrderList.add(order);
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+		//リソース解放
+		finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return OrderList;
+	}
+	
+	/**
+	 * selectByDate:全体の注文リストから特定の期間の注文だけ取得
+	 * @param String startDate, String endDate, String AscOrDesc 
+	 * "2024-04-01","2024-04-20", "asc"か"desc" の形で入れてください。
+	 * @return ArrayList<Order>
+	 */
+	
+	public ArrayList<Order> selectByDate(String startDate, String endDate, String AscOrDesc) {
+		Connection con = null;
+		Statement smt = null;
+
+		ArrayList<Order> OrderList = new ArrayList<Order>();
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			//SQL文発行
+			String sql = "SELECT * FROM orderinfo WHERE date between '"
+					+startDate + "' and '" + endDate + "' ORDER BY date " + AscOrDesc;
+			System.out.println(sql);
+			ResultSet rs = smt.executeQuery(sql);
+
+			//rsからデータ取り出し、OrderListへ格納
+			while (rs.next()) {
+				Order order = new Order();
+
+				order.setId(rs.getInt("id"));
+				order.setUserid(rs.getInt("user_id"));
+				order.setProductid(rs.getInt("product_id"));
+				order.setDate(rs.getString("date"));
+				order.setQuantity(rs.getInt("quantity"));
+				order.setDeliveryStateId(rs.getInt("delivery_state_id"));
+				order.setIsPayment(rs.getBoolean("is_payment"));
+				order.setComment(rs.getString("comment"));
+
+				OrderList.add(order);
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+		//リソース解放
+		finally {
+			
 			if (smt != null) {
 				try {
 					smt.close();
@@ -156,6 +276,8 @@ public class OrderDAO {
 		}
 		return OrderList;
 	}
+	
+	
 
 	//getDetail : 一件の注文のデータ取得
 	//注文の id (注文番号)が必要です。
@@ -294,5 +416,6 @@ public class OrderDAO {
 			}
 		}
 	}
-
+	
+	
 }

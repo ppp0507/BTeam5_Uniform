@@ -28,16 +28,27 @@ if (error == null) {
 	<div id="wrap">
 
 		<!-- ヘッダー -->
-		<%@ include file="/common/header.jsp"%>
+	<jsp:include page="/common/header.jsp">
+		<jsp:param name="title">
+			<jsp:attribute name="value">
+				タイトル
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="headName">
+			<jsp:attribute name="value">
+				ログイン
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="nav">
+			<jsp:attribute name="value">
+					<div class="nav-padding">
+					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">【メニュー】</a>
+					<a href="<%=request.getContextPath()%>/productList">【商品一覧】</a>	
+					</div>
+			</jsp:attribute>
+		</jsp:param>
+	</jsp:include>
 
-
-		<!-- メニュー移動 -->
-		<nav>
-			<div style="padding: 0.5em;">
-				<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">メニュー</a>
-				<a href="<%=request.getContextPath()%>/view/Product/productList.jsp">商品一覧</a>
-			</div>
-		</nav>
 
 		<!-- メインコンテンツ(本文) -->
 		<main>

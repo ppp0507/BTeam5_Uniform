@@ -40,15 +40,15 @@ public class ProductListServlet extends HttpServlet {
 				// productList.jspにフォワード
 				request.getRequestDispatcher("/view/Product/productList.jsp").forward(request, response);
 				
-			}else
+			} else {
 				//リクエストスコープへデータの登録
 			request.setAttribute("error", error);
 			request.setAttribute("cmd", cmd);
 
 			//エラーが有る場合はerror.jspにフォワードする
 			request.getRequestDispatcher("/view/Common/error.jsp").forward(request, response);
+			}
+
 		}
-
 	}
-
 }

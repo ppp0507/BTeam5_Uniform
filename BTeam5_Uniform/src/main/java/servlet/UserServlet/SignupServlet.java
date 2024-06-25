@@ -85,7 +85,7 @@ public class SignupServlet extends HttpServlet {
 			if (error.equals("")) {
 				// エラー無し
 				// insert.jspにフォワード
-				request.getRequestDispatcher("/view/Common/menu.jsp").forward(request, response);
+				request.getRequestDispatcher("/view/User/login.jsp").forward(request, response);
 
 			} else {
 				// エラー有り
