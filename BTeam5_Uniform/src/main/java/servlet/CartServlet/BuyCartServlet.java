@@ -101,7 +101,7 @@ public class BuyCartServlet extends HttpServlet {
 				orderDao.insert(user_id, i.getProductid(), i.getQuantity(), comment);
 				
 				mailText += 
-						"\n商品名: "+product.getName() + " 数量:" + i.getQuantity() + " 価格: " + product.getPrice() + "円(1枚あたり)" ;
+						"\n商品名: "+product.getName() + " \n数量:" + i.getQuantity() + " \n価格: " + product.getPrice() + "円(1枚あたり)" ;
 			}
 			
 			mailText = name + "様、この度はご購入ありがとうございました。\n以下、ご注文の詳細となります。\n"

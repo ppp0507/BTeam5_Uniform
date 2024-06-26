@@ -3,6 +3,8 @@
 package servlet.UserServlet;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import bean.User;
 import dao.OrderDAO;
@@ -80,6 +82,30 @@ public class AccountEditServlet extends HttpServlet {
 			if (request.getParameter("cmd").equals("update")) {
 				// アカウント更新処理
 				
+				// 入力値チェック
+				
+				// nameに何も入力されていないなら
+				if (name.length() == 0) {
+					error = "名前を空にする事はできません。";
+					return;
+				}
+
+				// addressに何も入力されていないなら
+				if (address.length() == 0) {
+					error = "住所を空にする事はできません。";
+					return;
+				}
+				
+				// mailの形式検査用
+				Pattern pattern = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+				Matcher matcher = pattern.matcher(mail);
+
+				// mailの形式が正くなければ
+				if (matcher.matches() == false) {
+					error = "メールアドレスの形式が正しくありません。";
+					return;
+				}
+				
 				// エラー処理
 				if (name == null || mail == null || address == null) {
 					error = "無効なアクセスです";
@@ -122,7 +148,7 @@ public class AccountEditServlet extends HttpServlet {
 				// セッション情報の削除
 				session.setAttribute("user", null);
 				
-				toForward = "/view/Common/menu.jsp";
+				toForward = "/view/User/login.jsp";
 				
 			}
 			

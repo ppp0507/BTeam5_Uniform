@@ -9,7 +9,9 @@
 	String error = (String)request.getAttribute("error");
 
 	if (error == null){
-		error = "エラーが存在しません";
+		if (error.equals("")){
+			error = "エラーが存在しません";
+		}
 	}
 
 %>
@@ -19,7 +21,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link href="<%= request.getContextPath() %>/css/style.css" rel="stylesheet">
-		<title>Insert title here</title>
+		<title>エラー</title>
 	</head>
 	
 	<body>

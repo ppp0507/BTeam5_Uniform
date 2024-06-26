@@ -38,8 +38,9 @@ Product product = (Product)request.getAttribute("product");
 <jsp:param name="nav">
 <jsp:attribute name="value">
 <div class="nav-padding">
+<a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー】</a>
 <a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
-<a href="<%=request.getContextPath()%>/view/Cart/showCart.jsp">【商品ページ】</a>
+<a href="<%=request.getContextPath()%>/view/Cart/showCart.jsp">【カート確認】</a>
 </div>
 </jsp:attribute>
 </jsp:param>

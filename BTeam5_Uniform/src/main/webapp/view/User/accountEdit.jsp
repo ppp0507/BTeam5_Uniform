@@ -100,17 +100,17 @@
 
 					<div><div>名前</div></div>
 					<div><div><%= editUser.getUsername() %></div></div>
-					<div style="flex: 2"><input type="text" name="name"></div>
+					<div style="flex: 2"><input type="text" name="name" value="<%= editUser.getUsername() %>"></div>
 					<span class="flex-indent"></span>
 
 					<div><div>住所</div></div>
 					<div><div><%= editUser.getAddress() %></div></div>
-					<div style="flex: 2"><input type="text" name="address"></div>
+					<div style="flex: 2"><input type="text" name="address" value="<%= editUser.getAddress() %>"></div>
 					<span class="flex-indent"></span>
 					
 					<div><div>メールアドレス</div></div>
 					<div><div><%= editUser.getEmail() %></div></div>
-					<div style="flex: 2"><input type="text" name="mail"></div>
+					<div style="flex: 2"><input type="text" name="mail" value="<%= editUser.getEmail() %>"></div>
 					<span class="flex-indent"></span>
 
 				</div>

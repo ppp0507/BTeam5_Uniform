@@ -25,15 +25,27 @@ ArrayList<Order> orderList = (ArrayList<Order>) request.getAttribute("orderList"
 <body>
 
 	<!-- ヘッダー -->
-	<%@ include file="/common/header.jsp"%>
+	<jsp:include page="/common/header.jsp">
+		<jsp:param name="title">
+			<jsp:attribute name="value">
+				タイトル
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="headName">
+			<jsp:attribute name="value">
+				ユーザー詳細
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="nav">
+			<jsp:attribute name="value">
+					<div class="nav-padding">
+					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">【メニュー】</a>
+					<a href="<%=request.getContextPath()%>/userList">【ユーザー一覧】</a>	
+					</div>
+			</jsp:attribute>
+		</jsp:param>
+	</jsp:include>
 
-	<!-- メニュー移動 -->
-	<nav>
-		<div style="padding: 0.5em;">
-			<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">メニュー</a>
-			<a href="<%=request.getContextPath()%>/view/Product/productList.jsp">商品一覧</a>
-		</div>
-	</nav>
 
 	<!-- メインコンテンツ(ユーザー一覧) -->
 	<main>
@@ -44,6 +56,8 @@ ArrayList<Order> orderList = (ArrayList<Order>) request.getAttribute("orderList"
 			if (userElement.getAuthority_id() == 1) {
 			%>
 			<p style="text-align: left">
+				権限 ：管理者</p>
+			<p style="text-align: left">
 				名前 ：<%=userElement.getUsername()%></p>
 			<p style="text-align: left">
 				Email：<%=userElement.getEmail()%></p>
@@ -53,7 +67,8 @@ ArrayList<Order> orderList = (ArrayList<Order>) request.getAttribute("orderList"
 			<%
 			} else {
 			%>
-
+			<p style="text-align: left">
+				権限 ：<%=userElement.getAuthority_id() == 2 ? "会員" : "ゲスト"%></p>
 			<p style="text-align: left">
 				名前 ：<%=userElement.getUsername()%></p>
 			<p style="text-align: left">
@@ -109,7 +124,7 @@ ArrayList<Order> orderList = (ArrayList<Order>) request.getAttribute("orderList"
 							%>
 							</td>
 							<td><a
-								href="<%=request.getContextPath()%>/orderDetail?order_id=<%=order.getId()%>">詳細</a>
+								href="<%=request.getContextPath()%>/orderDetail?id=<%=order.getId()%>">詳細</a>
 							</td>
 
 						</tr>

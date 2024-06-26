@@ -129,7 +129,8 @@ User user = (User) session.getAttribute("user");
 					</tr>
 				<%
 					}
-				} else { %>
+				}
+				if(orderList.size() == 0){ %>
 				
 				<h3>注文がありません。</h3>
 					

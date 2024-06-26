@@ -35,18 +35,20 @@
 
 <body>
 
+	<jsp:include page="/common/header.jsp">
+		<jsp:param name="nav">
+			<jsp:attribute name="value">
+					<div class="nav-padding">
+						<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
+						<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
+						
+					</div>
+			</jsp:attribute>
+		</jsp:param>
+	</jsp:include>
+	
 	<main>
 	
-		<jsp:include page="/common/header.jsp">
-			<jsp:param name="nav">
-				<jsp:attribute name="value">
-						<div class="nav-padding">
-							<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
-							<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
-						</div>
-				</jsp:attribute>
-			</jsp:param>
-		</jsp:include>
 	
 		<center>
 		
@@ -73,6 +75,7 @@
 				<span class="flex-indent"></span>
 			
 			</div>
+			<a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー画面へ】</a>
 		</center>
 	</main>
 
