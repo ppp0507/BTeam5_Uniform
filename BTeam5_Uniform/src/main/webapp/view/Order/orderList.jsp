@@ -26,8 +26,27 @@ UserDAO userDao = new UserDAO();
 
 <body>
 
-	<!-- ヘッダー:今ログインしているユーザー表示　-->
-	<%@ include file="/common/header.jsp"%>
+	<!-- ヘッダー -->
+	<jsp:include page="/common/header.jsp">
+		<jsp:param name="title">
+			<jsp:attribute name="value">
+				タイトル
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="headName">
+			<jsp:attribute name="value">
+				注文一覧
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="nav">
+			<jsp:attribute name="value">
+					<div class="nav-padding">
+					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">【メニュー】</a>
+					<a href="<%=request.getContextPath()%>/productList">【商品一覧】</a>	
+					</div>
+			</jsp:attribute>
+		</jsp:param>
+	</jsp:include>
 	
 	 <!-- メインコンテンツ(本文) -->
     <main>
@@ -113,10 +132,10 @@ UserDAO userDao = new UserDAO();
 						//is_payment列の値によって変数に格納する文字を変える
 						if(isPayment == true){
 							//trueは支払い済み
-							paymentState = "支払い済み";
+							paymentState = "入金済み";
 						}else{
 							//falseは未払い
-							paymentState = "未払い";
+							paymentState = "入金待ち";
 						}
 				%>
                     <tr>
@@ -151,7 +170,7 @@ UserDAO userDao = new UserDAO();
 							<%= deliveryState %>
 						</td>
                         <td>
-                            <a href="<%= request.getContextPath() %>/view/Order/orderDetail.jsp">
+                            <a href="<%= request.getContextPath() %>/orderDetail?id=<%=order.getId()%>">
                             詳細  
                             </a>
                         </td>

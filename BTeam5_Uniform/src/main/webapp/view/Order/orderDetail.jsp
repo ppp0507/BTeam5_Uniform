@@ -1,24 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@page import="bean.User,bean.Order" %>
+    <%@page import="bean.User,bean.Order,bean.Product,dao.UserDAO,dao.ProductDAO,jakarta.servlet.http.HttpSession" %>
     
- <%
+<%
 
-Order order = (Order) request.getAttribute("order");
+// DAOの作成
+UserDAO userDao = new UserDAO();
+ProductDAO productDao = new ProductDAO();
+
+Order order = (Order)request.getAttribute("order");
 int id = order.getId();//注文番号
-int user_id = order.getUserid();//名前
-int product_id = order.getProductid();//注文番号
-int quantit = order.getQuantity();//個数
-String date = order.getDate();//発送日
+
+// セッションに編集対象のOrderのidを登録
+session.setAttribute("order_id", id);
+
+int user_id = order.getUserid();//ユーザ一id
+
+User user = userDao.getUserbyId(user_id);
+
+String userName = user.getUsername();	// ユーザ一名
+String mail = user.getEmail();		// メールアドレス
+
+int product_id = order.getProductid();//商品番号
+
+Product product = productDao.getDetail(product_id);
+
+String productName = product.getName();	// 商品名
+int price = product.getPrice();			// 値段
+
+String date = order.getDate();//発注日
+int quantity = order.getQuantity();//個数
 boolean is_payment = order.getIsPayment();//入金状況
-int delivery_state_i = order.getDeliveryStateId();//発送状況
+int delivery_state = order.getDeliveryStateId();//発送状況
 String comment = order.getComment();//備考
 
 %>
 
 <!DOCTYPE html>
 <link rel="stylesheet" type="text/css"
-	href="style.css">
+	href="<%= request.getContextPath() %>/css/style.css">
 <head>
 
 </head>
@@ -26,7 +46,6 @@ String comment = order.getComment();//備考
 <body>
     <!-- ヘッダー:今ログインしているユーザー表示　-->
     <header>
-        <%@ include file="/common/header.jsp"%>
         <div><p class="admin-user">ログイン:管理ユーザー</p></div>
     </header>
 
@@ -41,85 +60,80 @@ String comment = order.getComment();//備考
     <!-- メインコンテンツ(本文) -->
     <main>
         <center>
-            <div class="center-flex" style="border: solid 1px gray">
-                <table>
-                	<tr>
-                		<td>注文番号</td>
-                		<td><%= id %></td>
-                			<span class="flex-indent"></span>
-                	</tr>
-                
-                	<tr>
-                		<td>顧客メール</td>
-                		<td>example.com</td>
-                			<span class="flex-indent"></span>
-                	</tr>
-                	<tr>
-                		<td>名前</td>
-                		<td><%= user_id %></td>
-                			<span class="flex-indent"></span>
-                	</tr>
-                	<tr>
-                		<td>注文商品</td>
-                		<td><%= product_id %></td>
-                			<span class="flex-indent"></span>
-					</tr>
-					<tr>
-                		<td>値段</td>
-                		<td>100</td>
-                			<span class="flex-indent"></span>
-                	</tr>
-                	<tr>
-                		<td>個数</td>
-                		<td><%= quantit %></td>
-                			<span class="flex-indent"></span>
-                	</tr>
-                	<tr>
-                		<td>合計金額</td>
-                		<td>2500</td>
-                			<span class="flex-indent"></span>
-                	</tr>
-                	<tr>
-                		<td>発注日</td>
-               			<td><%= date %></td>
-                		<span class="flex-indent"></span>
-               		 </tr>
-                </table>
-                
-                <div><div>入金状況</div></div>
-                <div>
-                    <div class="select-box">
-                        <form>
-                            <div>
-                                <select>
-                                    <%= is_payment %>
-                                </select>
-                                <input type="submit" value="更新">
-                            </div>
-                        </form>
-                    </div></div>
-                <span class="flex-indent"></span>
-                
-                <div><div>発送状況</div></div>
-                <div>
-                    <div class="select-box">
-                        <form>
-                            <div>
-                                <select>
-                                    <%= delivery_state_i %>
-                                </select>
-                                <input type="submit" value="更新">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <span class="flex-indent"></span>
-
-                <div><div>備考欄</div></div>
-                <div><div><%= comment %></div></div>
-                <span class="flex-indent"></span>
-                
-            </div>
+        	
+	            <div class="center-flex" style="border: solid 1px gray">
+	                
+	                <div><div>注文番号</div></div>
+	                <div><div><%= id %></div></div>
+	                <span class="flex-indent"></span>
+	                
+	                <div><div>顧客メール</div></div>
+	                <div><div><%= mail %></div></div>
+	                <span class="flex-indent"></span>
+	                
+	                <div><div>名前</div></div>
+	                <div><div><%= userName %></div></div>
+	                <span class="flex-indent"></span>
+	                
+	                <div><div>注文商品</div></div>
+	                <div><div><%= productName %></div></div>
+	                <span class="flex-indent"></span>
+	
+	                <div><div>値段</div></div>
+	                <div><div><%= price %></div></div>
+	                <span class="flex-indent"></span>
+	                
+	                <div><div>個数</div></div>
+	                <div><div><%= quantity %></div></div>
+	                <span class="flex-indent"></span>
+	                
+	                <div><div>合計金額</div></div>
+	                <div><div><%= price * quantity %></div></div>
+	                <span class="flex-indent"></span>
+	                
+	                <div><div>発注日</div></div>
+	                <div><div><%= date %></div></div>
+	                <span class="flex-indent"></span>
+	                
+	                
+	                <div><div>入金状況</div></div>
+	                 <form action="<%=request.getContextPath()%>/orderEdit" method="get">
+	                <div>
+	               
+	                    <div class="select-box">
+	                        <div>
+	                            <select name="is_payment">
+	                                <option value="0" <% if(is_payment == false) { %>selected<% }%>>入金待ち</option>
+	                                <option value="1" <% if(is_payment == true) { %>selected<% }%>>入金済み</option>
+	                            </select>
+	                            <input type="submit" value="更新">
+	                        </div>
+	                    </div>
+	                </div>
+	                <span class="flex-indent"></span>
+	                
+	                <div><div>入金状況</div></div>
+	                <div>
+	                    <div class="select-box">
+	                        <div>
+	                            <select name="delivery_state">
+	                                <option value="1" <% if(delivery_state == 1) { %>selected<% }%>>発送済み</option>
+	                                <option value="2" <% if(delivery_state == 2) { %>selected<% }%>>発送準備中</option>
+	                                <option value="3" <% if(delivery_state == 3) { %>selected<% }%>>未発送</option>
+	                            </select>
+	                            <input type="submit" value="更新">
+	                        </div>
+	                    </div>
+	                </div>
+	                 </form>
+	                <span class="flex-indent"></span>
+	
+	                <div><div>備考欄</div></div>
+	                <div><div><%= comment %></div></div>
+	                <span class="flex-indent"></span>
+	                
+	            </div>
+           
         </center>
     </main>
 

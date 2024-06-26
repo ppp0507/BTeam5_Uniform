@@ -185,7 +185,7 @@ public class OrderDAO {
 			//SQL文発行
 			String sql = "SELECT * FROM orderinfo WHERE date between '"
 					+startDate + "' and '" + endDate + "' ORDER BY date " + AscOrDesc;
-			System.out.println(sql);
+			
 			ResultSet rs = smt.executeQuery(sql);
 
 			//rsからデータ取り出し、OrderListへ格納
@@ -397,7 +397,7 @@ public class OrderDAO {
 			String sql = "INSERT INTO orderinfo(user_id,product_id,date,quantity,delivery_state_id,is_payment,comment) VALUES("
 					+ user_id + "," + product_id + ",'" + formatNowDate + "'," + quantity + "," + 3 + ",false,'"
 					+ comment + "')";
-			System.out.println(sql);
+			
 			smt.executeUpdate(sql);
 
 		} catch (Exception e) {

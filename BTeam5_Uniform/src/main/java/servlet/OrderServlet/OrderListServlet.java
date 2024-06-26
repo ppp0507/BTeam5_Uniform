@@ -36,11 +36,7 @@ public class OrderListServlet extends HttpServlet {
 		String sort = request.getParameter("sort") == null ? "" : request.getParameter("sort");
 		String startDate = request.getParameter("startDate") == null ? "" : request.getParameter("startDate");
 		String endDate = request.getParameter("endDate") == null ? "" : request.getParameter("endDate");
-		
-		System.out.println("this is sort " + sort);
-		System.out.println("this is date " + startDate + endDate);
-		
-
+	
 		
 		// セッションからユーザー情報を取得
 		HttpSession session = request.getSession();

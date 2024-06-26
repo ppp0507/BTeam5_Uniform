@@ -34,7 +34,6 @@ public class OrderHistoryServlet extends HttpServlet {
 		
 		//userID 取得
 		int id = user.getUserid();
-		System.out.println("param id です" + id);
 
 		try {
 			//OrderDAOオブジェクトを作成

@@ -35,6 +35,7 @@ User user = (User) session.getAttribute("user");
 					<div class="nav-padding">
 					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">【メニュー】</a>
 					<a href="<%=request.getContextPath()%>/productList">【商品ページ】</a>	
+					<a href="<%=request.getContextPath()%>/view/Cart/showCart.jsp">【カート確認】</a>	
 					</div>
 			</jsp:attribute>
 		</jsp:param>
@@ -63,6 +64,9 @@ User user = (User) session.getAttribute("user");
 						</th>
 						<th>
 							注文日
+						</th>
+						<th>
+						    入金状況
 						</th>
 						<th>
 							発送状況
@@ -115,6 +119,9 @@ User user = (User) session.getAttribute("user");
 						</td>     
 						<td>
 							<%= order.getDate() %>
+						</td>
+						<td>
+						    <%=order.getIsPayment() ? "入金済" : "入金待ち" %>
 						</td>
 						<td>
 							<%= deliveryState %>
