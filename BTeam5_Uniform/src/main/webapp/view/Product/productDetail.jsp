@@ -12,7 +12,7 @@ if (user == null){
 //インスタンス変数 username, authority の初期化
 user = new User();
 user.setUsername("ゲスト");
-user.setAuthority_id(1);
+user.setAuthority_id(3);
 }
 
 // サーブレットから商品情報を取得

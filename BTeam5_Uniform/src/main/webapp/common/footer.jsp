@@ -4,5 +4,5 @@
 
 <%-- フッター --%>
 <footer>
-    <div style="padding: 1em;">2024 copyright なんちゃら これはフッターです</div>
+    <div style="padding: 1em;">Copyright&copy; 2024 神田ユニフォーム  All Rights Reserved.</div>
 </footer>
