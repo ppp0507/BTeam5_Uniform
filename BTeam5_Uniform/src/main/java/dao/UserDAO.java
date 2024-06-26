@@ -50,7 +50,12 @@ public class UserDAO {
 		}
 	}
 
-	//selectByUser:DBのuserからemail, passwordが一致するデータを取得
+	/**
+	 * selectByUser:DBのuserからemail, passwordが一致するデータを取得
+	 * @param email
+	 * @param password
+	 * @return User
+	 */
 	public User selectByUser(String email, String password) {
 		Connection con = null;
 		Statement smt = null;
@@ -63,6 +68,58 @@ public class UserDAO {
 
 			//SQL文
 			String sql = "SELECT * FROM user WHERE email ='" + email + "' AND password='" + password + "'";
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//rsから取得したデータをuserオブジェクトに格納
+			if (rs.next()) {
+				user.setUserid(rs.getInt("id"));
+				user.setUsername(rs.getString("name"));
+				user.setPassword(rs.getString("password"));
+				user.setEmail(rs.getString("email"));
+				user.setAddress(rs.getString("address"));
+				user.setAuthority_id(rs.getInt("authority_id"));
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+
+		//リソース解放
+		finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return user;
+	}
+	
+	/**
+	 * オーバーライドしたメソッド
+	 * selectByUser:DBのuserからemailが一致するデータを取得
+	 * @param email
+	 * @return User
+	 */
+	public User selectByUser(String email) {
+		Connection con = null;
+		Statement smt = null;
+
+		User user = new User();
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			//SQL文
+			String sql = "SELECT * FROM user WHERE email ='" + email + "'";
 
 			ResultSet rs = smt.executeQuery(sql);
 
