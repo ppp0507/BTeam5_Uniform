@@ -50,7 +50,7 @@ public class ProductDAO {
 			smt = con.createStatement();
 
 			//SQL文発行
-			String sql = "SELECT * FROM product";
+			String sql = "SELECT * FROM product WHERE NOT(id=-1)";
 			ResultSet rs = smt.executeQuery(sql);
 
 			//rsからデータ取り出し、ProductListへ格納

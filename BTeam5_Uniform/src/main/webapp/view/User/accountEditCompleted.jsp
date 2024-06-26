@@ -36,12 +36,16 @@
 <body>
 
 	<jsp:include page="/common/header.jsp">
+		<jsp:param name="headName">
+			<jsp:attribute name="value">
+				アカウント編集完了
+			</jsp:attribute>
+		</jsp:param>
 		<jsp:param name="nav">
 			<jsp:attribute name="value">
 					<div class="nav-padding">
 						<a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー】</a>
 						<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
-						
 					</div>
 			</jsp:attribute>
 		</jsp:param>
