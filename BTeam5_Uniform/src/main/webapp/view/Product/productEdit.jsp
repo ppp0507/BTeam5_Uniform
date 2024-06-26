@@ -22,6 +22,12 @@ try {
 
 	//取得した商品番号の商品情報を取得
 	product = productDao.getDetail(id);
+	
+	//DBに存在しない商品
+	if(product.getName() == null){
+		error="存在しない商品です。";
+		return;
+	}
 
 } catch (IllegalStateException e) {
 	//DB接続エラーが発生した場合
@@ -33,16 +39,12 @@ try {
 	if (error != null) {
 		//errorをリクエストスコープに登録
 		request.setAttribute("error", error);
+		request.getRequestDispatcher("../Common/error.jsp").forward(request, response);
 	}
 
 	if (cmd != null) {
 		//cmdをリクエストスコープに登録
 		request.setAttribute("cmd", cmd);
-	}
-
-	if (error != null) {
-		//error.jspに処理を遷移
-		request.getRequestDispatcher("view/Common/error.jsp").forward(request, response);
 	}
 
 }

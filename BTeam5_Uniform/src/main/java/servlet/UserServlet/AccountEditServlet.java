@@ -154,7 +154,7 @@ public class AccountEditServlet extends HttpServlet {
 			
 		} catch (IllegalStateException e) {
 			// エラー処理
-			error = "DB接続エラーの為、一覧表示はできませんでした。";
+			error = "DB接続エラーの為、アカウント編集はできませんでした。";
 			e.printStackTrace();
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。<br>" + e;

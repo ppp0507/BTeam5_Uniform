@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/userDetail")
 public class UserDetailServlet extends HttpServlet {
@@ -29,18 +30,26 @@ public class UserDetailServlet extends HttpServlet {
 		Order order = new Order();
 
 		try {
+			
+			// セッションからユーザー情報を取得
+			HttpSession session = request.getSession();
+			User loginUser = (User) session.getAttribute("user");
+			if (loginUser == null || loginUser.getAuthority_id() != 1) {
+			  error = "接続権限のないページです。";
+			  return;
+			}
 
 			// フォームから送信された値を取得 今回はGETリクエストで「ID」というパラメータを受け取る想定
 			int user_id = Integer.parseInt(request.getParameter("Userid"));
 			
 			ArrayList<Order> orderList = orderDao.selectByUser(user_id);
 
-			/*if (order.getId() == 0) {
-				error = "指定したIDの注文情報は存在しません。";
-			}*/
-			
 			user = objDao.getUserbyId(user_id);
-
+			
+			if(user.getUsername() == null) {
+				error = "存在しないユーザーです。";
+				return;
+			}
 			// リクエストスコープに格納
 			request.setAttribute("userElement", user);
 			request.setAttribute("orderList", orderList);
