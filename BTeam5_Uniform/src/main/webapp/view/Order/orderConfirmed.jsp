@@ -5,6 +5,12 @@
 <%
 String name = (String)request.getAttribute("order_name");
 User user = (User) session.getAttribute("user");
+if(user == null){
+	//インスタンス変数 userid, password, email, authority の初期化
+	user = new User();
+	user.setUsername("ゲスト");
+	user.setAuthority_id(3);
+}
 %>
 <!DOCTYPE html>
 <link rel="stylesheet" type="text/css"
