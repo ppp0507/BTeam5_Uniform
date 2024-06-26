@@ -30,7 +30,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link href="<%= request.getContextPath() %>/css/style.css" rel="stylesheet">
-		<title>アカウント編集</title>
+		<title>アカウント編集完了</title>
 	</head>
 
 <body>
@@ -39,7 +39,7 @@
 		<jsp:param name="nav">
 			<jsp:attribute name="value">
 					<div class="nav-padding">
-						<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
+						<a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー】</a>
 						<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
 						
 					</div>

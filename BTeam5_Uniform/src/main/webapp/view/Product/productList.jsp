@@ -38,8 +38,15 @@ ArrayList<Product> productList =(ArrayList<Product>)request.getAttribute("produc
 			<jsp:param name="nav">
 				<jsp:attribute name="value">
 						<div class="nav-padding">
-							<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
-							<a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー画面】</a>
+					
+							<a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー】</a>
+							<%
+							if(loginUser.getAuthority_id()!=1){
+								%>
+								<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
+								<%
+							}
+							%>
 						</div>
 				</jsp:attribute>
 			</jsp:param>
@@ -53,14 +60,14 @@ ArrayList<Product> productList =(ArrayList<Product>)request.getAttribute("produc
 			
 			<div style="margin-bottom: 250px">				
 				
-				<table style="margin: auto">
+                <table border="1" class="table-padding solid-table" style="margin: 2em;">
 					<tr>
-						<th style="background-color: #6666ff; width: 200px">商品番号</th>
-						<th style="background-color: #6666ff; width: 200px">商品名</th>
-						<th style="background-color: #6666ff; width: 200px">値段</th>
-						<th style="background-color: #6666ff; width: 200px">個数</th>
-						<th style="background-color: #6666ff; width: 200px">商品イメージ</th>
-						<th style="background-color: #6666ff; width: 250px" colspan="2">編集</th>
+						<th>商品番号</th>
+						<th>商品名</th>
+						<th>値段</th>
+						<th>個数</th>
+						<th>商品イメージ</th>
+						<th>編集</th>
 					</tr>
 					
 					<%
@@ -77,7 +84,7 @@ ArrayList<Product> productList =(ArrayList<Product>)request.getAttribute("produc
 									<td style="text-align: center; width: 200px"><%= products.getName()%></td>
 									<td style="text-align: center; width: 200px"><%= products.getPrice() %></td>
 									<td style="text-align: center; width: 200px"><%= products.getStock()%></td>
-									<td style="text-align: center; width: 200px"><%= products.getImage_url()%></td>
+									<td style="text-align: center; width: 200px"><%= products.getImage_url().equals("null") ? "未登録" : products.getImage_url()%></td>
 									<td style="text-align: center; width: 125px">
 									<a href="<%=request.getContextPath()%>/view/Product/productEdit.jsp?product_id=<%=products.getId()%>">編集</a>
 									</td>
@@ -113,7 +120,18 @@ ArrayList<Product> productList =(ArrayList<Product>)request.getAttribute("produc
 							</div>
 							
 							<a href="<%=request.getContextPath()%>/productDetail?id=<%=products.getId()%>">商品詳細</a>
+							<%
+							if(products.getStock()==0){
+								%>
+								<a class="blue-button">売り切れ</a>
+								<%
+							} else{
+							%>
 							<a href="<%=request.getContextPath()%>/insertIntoCart?id=<%=products.getId()%>" class="blue-button">カートに入れる</a>
+							<%
+							}
+							%>
+						
 						</div>
 						
 						

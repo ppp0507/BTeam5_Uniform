@@ -24,7 +24,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link href="<%= request.getContextPath() %>/css/style.css" rel="stylesheet">
-		<title>メニュー画面</title>
+		<title>メニュー</title>
 	</head>
 	
 	<body>
@@ -42,8 +42,7 @@
 		<jsp:param name="nav">
 			<jsp:attribute name="value">
 					<div class="nav-padding">
-						<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
-						<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
+						
 					</div>
 			</jsp:attribute>
 		</jsp:param>
@@ -71,8 +70,7 @@
 		<jsp:param name="nav">
 			<jsp:attribute name="value">
 					<div class="nav-padding">
-						<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
-						<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
+						
 					</div>
 			</jsp:attribute>
 		</jsp:param>
@@ -82,7 +80,7 @@
 	    <main>
 			<center>
 				<div class="left-center-list link-button">
-					<div><a href="<%= request.getContextPath() %>/productList">【商品ページ】</a></div>
+					<div><a href="<%= request.getContextPath() %>/productList">【商品一覧】</a></div>
 					<div><a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a></div>
 					<div><a href="<%= request.getContextPath() %>/orderHistory">【購入履歴】</a></div>
 					<div><a href="<%= request.getContextPath() %>/view/User/accountEdit.jsp">【アカウント編集】</a></div>
@@ -102,8 +100,7 @@
 		<jsp:param name="nav">
 			<jsp:attribute name="value">
 					<div class="nav-padding">
-						<a href="<%= request.getContextPath() %>/productList">【商品ページ】</a>
-						<a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a>
+						
 					</div>
 			</jsp:attribute>
 		</jsp:param>
@@ -113,7 +110,7 @@
 	    <main>
 			<center>
 				<div class="left-center-list link-button">
-					<div><a href="<%= request.getContextPath() %>/productList">【商品ページ】</a></div>
+					<div><a href="<%= request.getContextPath() %>/productList">【商品一覧】</a></div>
 					<div><a href="<%= request.getContextPath() %>/view/Cart/showCart.jsp">【カート確認】</a></div>
 					<div><a href="<%= request.getContextPath() %>/view/User/login.jsp">【ログイン】</a></div>
 					<div><a href="<%= request.getContextPath() %>/view/User/signup.jsp">【アカウント作成】</a></div>

@@ -40,7 +40,7 @@
 	        <jsp:param name="nav">
 	            <jsp:attribute name="value">
 	                    <div class="nav-padding">
-	                        <a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー画面】</a>
+	                        <a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー】</a>
 	                    </div>
 	            </jsp:attribute>
 	        </jsp:param>
@@ -52,5 +52,8 @@
 				<%= error %>
 			</center>
 		</main>
+		
+			<!-- フッター -->
+		<%@ include file="/common/footer.jsp"%>
 	</body>
 </html>

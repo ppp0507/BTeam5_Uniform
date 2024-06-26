@@ -33,6 +33,9 @@ import bean.Order;
  * deleteOrdersByUser_id(int user_id) : 指定したユーザ一idに紐づいたOrderの削除
  * ⇒作成者: 屋比久,AccountEditServletで使っています
  * 
+ * moveDeletedOrdersByProduct_id(int product_id) : 指定した商品idに紐づいたOrderを「削除済み」というidが-1のダミー商品に紐づける
+ * ⇒作成者: 屋比久,AccountEditServletで使っています
+ * 
  */
 
 public class OrderDAO {
@@ -437,6 +440,46 @@ public class OrderDAO {
 
 			//SQL文発行
 			String sql = "DELETE FROM orderinfo WHERE user_id =" + user_id;
+			count = smt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+		//リソース解放
+		finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return count;
+	}
+
+	// moveDeletedOrdersByProduct_id(int product_id) : 指定した商品idに紐づいたOrderを「削除済み」というidが-1のダミー商品に紐づける
+	// 商品idが必要。結果なし時の返り値: 0
+	// 作成者: 屋比久
+	public int moveDeletedOrdersByProduct_id(int product_id) {
+
+		Connection con = null;
+		Statement smt = null;
+		
+		// return用の変数
+		int count = 0;
+		
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			//SQL文発行
+			String sql = "UPDATE orderinfo SET product_id=" + -1 + " WHERE product_id=" + product_id;
 			count = smt.executeUpdate(sql);
 
 		} catch (Exception e) {

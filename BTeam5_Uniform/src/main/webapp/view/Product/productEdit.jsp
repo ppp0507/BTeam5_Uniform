@@ -46,6 +46,9 @@ try {
 	}
 
 }
+
+session.setAttribute("delete_product_id", product.getId());
+
 %>
 
 <!DOCTYPE html>
@@ -64,13 +67,13 @@ try {
 		<jsp:include page="/common/header.jsp">
 			<jsp:param name="headName">
 				<jsp:attribute name="value">
-					商品一覧
+					商品編集
 				</jsp:attribute>
 			</jsp:param>
 			<jsp:param name="nav">
 				<jsp:attribute name="value">
 						<div class="nav-padding">
-							<a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー画面】</a>
+							<a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー】</a>
 							<a href="<%= request.getContextPath() %>/productList">【商品一覧】</a>
 						</div>
 				</jsp:attribute>
@@ -147,7 +150,16 @@ try {
 						<span class="flex-indent"></span>
 
 					</div>
-				<input type="submit" value="更新" style="margin: 1em;">
+				<div class="flex-bottom">
+					<form>
+						<input type="hidden" name="cmd" value="update">
+						<input type="submit" value="更新" style="margin: 1em;">
+					</form>
+					<form action="<%=request.getContextPath()%>/productEdit" method="get">
+						<input type="hidden" name="cmd" value="delete">
+						<input type="submit" value="削除" style="margin: 1em;">
+					</form>
+				</div>
 				</form>
 			</center>
 

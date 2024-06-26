@@ -18,7 +18,7 @@ ArrayList<Order> orderList = (ArrayList<Order>) request.getAttribute("orderList"
 
 <html>
 <head>
-<title>ユーザー一覧</title>
+<title>ユーザー詳細</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 </head>
@@ -28,7 +28,7 @@ ArrayList<Order> orderList = (ArrayList<Order>) request.getAttribute("orderList"
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
-				タイトル
+				ユーザー詳細
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="headName">
@@ -77,7 +77,7 @@ ArrayList<Order> orderList = (ArrayList<Order>) request.getAttribute("orderList"
 			<%=userElement.getAddress()%></p>
 
 			<center>
-				<h3>注文内歴</h3>
+				<h3>注文履歴</h3>
 
 				<table border="1" class="table-padding solid-table"
 					style="margin: 2em;">

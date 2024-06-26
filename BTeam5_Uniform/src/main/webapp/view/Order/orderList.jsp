@@ -30,7 +30,7 @@ UserDAO userDao = new UserDAO();
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
-				タイトル
+				注文一覧
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="headName">

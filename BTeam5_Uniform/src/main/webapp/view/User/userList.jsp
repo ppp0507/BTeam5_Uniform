@@ -21,7 +21,7 @@ User user = (User)session.getAttribute("user");
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
-				タイトル
+				ユーザー一覧
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="headName">

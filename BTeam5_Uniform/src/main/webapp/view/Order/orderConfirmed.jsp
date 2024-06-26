@@ -19,19 +19,19 @@ User user = (User) session.getAttribute("user");
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
-				タイトル
+				注文完了
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="headName">
 			<jsp:attribute name="value">
-				ページに表示するタイトル
+				注文完了
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="nav">
 			<jsp:attribute name="value">
 					<div class="nav-padding">
 					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">【メニュー】</a>
-					<a href="<%=request.getContextPath()%>/productList">【商品ページ】</a>	
+					<a href="<%=request.getContextPath()%>/productList">【商品一覧】</a>	
 					</div>
 			</jsp:attribute>
 		</jsp:param>
@@ -69,8 +69,6 @@ User user = (User) session.getAttribute("user");
 
 	</main>
 
-	<!-- フッター -->
-	<footer>
-		<div style="padding: 1em;">2024 copyright なんちゃら これはフッターです</div>
-	</footer>
+		<!-- フッター -->
+		<%@ include file="/common/footer.jsp"%>
 </body>

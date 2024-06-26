@@ -24,7 +24,7 @@ if (user == null){
 	<head>
 		<meta charset="UTF-8">
 		<link href="<%= request.getContextPath() %>/css/style.css" rel="stylesheet">
-		<title>Insert title here</title>
+		<title>商品登録</title>
 	</head>
 
 	<body>

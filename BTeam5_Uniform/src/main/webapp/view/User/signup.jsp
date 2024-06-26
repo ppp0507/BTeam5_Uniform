@@ -20,12 +20,12 @@
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
-				タイトル
+				アカウント登録
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="headName">
 			<jsp:attribute name="value">
-				カート確認
+				アカウント登録
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="nav">

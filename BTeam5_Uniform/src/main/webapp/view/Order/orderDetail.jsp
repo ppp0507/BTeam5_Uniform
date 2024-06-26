@@ -44,96 +44,109 @@ String comment = order.getComment();//備考
 </head>
 
 <body>
-    <!-- ヘッダー:今ログインしているユーザー表示　-->
-    <header>
-        <div><p class="admin-user">ログイン:管理ユーザー</p></div>
-    </header>
-
-    <!-- メニュー移動 -->
-    <nav>
-        <div style="padding: 0.5em;">
-            <a href="<%= request.getContextPath() %>/view/Common/menu.jsp">【メニュー】</a>
-							<a href="<%= request.getContextPath() %>/productList">【商品一覧】</a>
-        </div>
-    </nav>
+<!-- ヘッダー -->
+	<jsp:include page="/common/header.jsp">
+		<jsp:param name="title">
+			<jsp:attribute name="value">
+				注文詳細
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="headName">
+			<jsp:attribute name="value">
+				注文詳細
+			</jsp:attribute>
+		</jsp:param>
+		<jsp:param name="nav">
+			<jsp:attribute name="value">
+					<div class="nav-padding">
+					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">【メニュー】</a>
+					<a href="<%=request.getContextPath()%>/orderList">【注文一覧】</a>	
+					</div>
+			</jsp:attribute>
+		</jsp:param>
+	</jsp:include>
 
     <!-- メインコンテンツ(本文) -->
     <main>
         <center>
-        	
 	            <div class="center-flex" style="border: solid 1px gray">
-	                
-	                <div><div>注文番号</div></div>
-	                <div><div><%= id %></div></div>
+	                <table>
+	                <tr>
+	                <td>注文番号：</td>
+	                <td><%= id %></td>
 	                <span class="flex-indent"></span>
-	                
-	                <div><div>顧客メール</div></div>
-	                <div><div><%= mail %></div></div>
+	                </tr>
+	                <tr>
+	                <td>顧客メール：</td>
+	                <td><%= mail %></td>
 	                <span class="flex-indent"></span>
-	                
-	                <div><div>名前</div></div>
-	                <div><div><%= userName %></div></div>
+	                </tr>
+	                <tr>
+	                <td>名前：</td>
+	                <td><%= userName %></td>
 	                <span class="flex-indent"></span>
-	                
-	                <div><div>注文商品</div></div>
-	                <div><div><%= productName %></div></div>
+	                </tr>
+	                <tr>
+	                <td>注文商品：</td>
+	                <td><%= productName %></td>
 	                <span class="flex-indent"></span>
-	
-	                <div><div>値段</div></div>
-	                <div><div><%= price %></div></div>
+					</tr>
+					<tr>
+	                <td>値段：</td>
+	                <td><%= price %></td>
 	                <span class="flex-indent"></span>
-	                
-	                <div><div>個数</div></div>
-	                <div><div><%= quantity %></div></div>
+	                </tr>
+	                <tr>
+	                <td>個数：</td>
+	                <td><%= quantity %></td>
 	                <span class="flex-indent"></span>
-	                
-	                <div><div>合計金額</div></div>
-	                <div><div><%= price * quantity %></div></div>
+	                </tr>
+	                <tr>
+	                <td>合計金額：</td>
+	                <td><%= price * quantity %></td>
 	                <span class="flex-indent"></span>
-	                
-	                <div><div>発注日</div></div>
-	                <div><div><%= date %></div></div>
+	                </tr>
+	                <tr>
+	                <td>発注日：</td>
+	                <td><%= date %></td>
 	                <span class="flex-indent"></span>
-	                
-	                
-	                <div><div>入金状況</div></div>
+	                </tr>
+	                <tr>
+	                <td>入金状況：</td>
 	                 <form action="<%=request.getContextPath()%>/orderEdit" method="get">
-	                <div>
-	               
+						<td>
 	                    <div class="select-box">
-	                        <div>
 	                            <select name="is_payment">
 	                                <option value="0" <% if(is_payment == false) { %>selected<% }%>>入金待ち</option>
 	                                <option value="1" <% if(is_payment == true) { %>selected<% }%>>入金済み</option>
 	                            </select>
 	                            <input type="submit" value="更新">
-	                        </div>
+	                            </td>
 	                    </div>
-	                </div>
 	                <span class="flex-indent"></span>
-	                
-	                <div><div>入金状況</div></div>
-	                <div>
+	                </tr>
+	                <tr>
+	                <td>発送状況</td>
+	                <td>
 	                    <div class="select-box">
-	                        <div>
 	                            <select name="delivery_state">
 	                                <option value="1" <% if(delivery_state == 1) { %>selected<% }%>>発送済み</option>
 	                                <option value="2" <% if(delivery_state == 2) { %>selected<% }%>>発送準備中</option>
 	                                <option value="3" <% if(delivery_state == 3) { %>selected<% }%>>未発送</option>
 	                            </select>
 	                            <input type="submit" value="更新">
-	                        </div>
+	                            </td>
 	                    </div>
-	                </div>
 	                 </form>
 	                <span class="flex-indent"></span>
-	
-	                <div><div>備考欄</div></div>
-	                <div><div><%= comment %></div></div>
+	                </tr>
+					<tr>
+	                <td>備考欄</td>
+	                <td><%= comment %></td>
 	                <span class="flex-indent"></span>
-	                
+	                </tr>
+	                </table>
 	            </div>
-           
         </center>
     </main>
 

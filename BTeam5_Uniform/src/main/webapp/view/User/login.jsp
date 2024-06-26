@@ -31,7 +31,7 @@ if (error == null) {
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
-				タイトル
+				ログイン
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="headName">

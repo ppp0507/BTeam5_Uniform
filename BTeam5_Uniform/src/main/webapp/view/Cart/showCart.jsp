@@ -21,7 +21,7 @@ User user = (User) session.getAttribute("user");
 	<jsp:include page="/common/header.jsp">
 		<jsp:param name="title">
 			<jsp:attribute name="value">
-				タイトル
+				カート確認
 			</jsp:attribute>
 		</jsp:param>
 		<jsp:param name="headName">
@@ -33,7 +33,7 @@ User user = (User) session.getAttribute("user");
 			<jsp:attribute name="value">
 					<div class="nav-padding">
 					<a href="<%=request.getContextPath()%>/view/Common/menu.jsp">【メニュー】</a>
-					<a href="<%=request.getContextPath()%>/productList">【商品ページ】</a>	
+					<a href="<%=request.getContextPath()%>/productList">【商品一覧】</a>	
 					</div>
 			</jsp:attribute>
 		</jsp:param>
