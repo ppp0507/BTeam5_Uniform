@@ -63,10 +63,19 @@ User user = (User) session.getAttribute("user");
 
 							Order order = (Order) order_list.get(i);
 							int id = order.getProductid();
+							
+							Product product = new Product();
+							try {
+								//DBから商品の情報取得
+								product = productDao.getDetail(id);
+							} catch (Exception e){
 
-							//DBから商品の情報取得
-							Product product = productDao.getDetail(id);
-
+								//errorをリクエストスコープに登録
+								request.setAttribute("error", "DB接続エラーが発生");
+								request.getRequestDispatcher("/view/Common/error.jsp").forward(request, response);
+								return;
+							}
+							
 							//DBに存在する商品か確認
 							if (product.getId() == 0) {
 						request.getRequestDispatcher("/deleteCart?i=" + i).forward(request, response);

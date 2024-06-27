@@ -9,9 +9,9 @@
 	String error = (String)request.getAttribute("error");
 
 	if (error == null){
-		if (error.equals("")){
-			error = "エラーが存在しません";
-		}
+		error = "エラーが存在しません";
+	}else if (error.equals("")){
+		error = "エラーが存在しません";
 	}
 
 %>
