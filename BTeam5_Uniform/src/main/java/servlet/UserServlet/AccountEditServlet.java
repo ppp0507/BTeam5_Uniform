@@ -75,6 +75,12 @@ public class AccountEditServlet extends HttpServlet {
 				error = "不明な権限です。";
 				return;
 			}
+			
+			// エラー処理
+			if (request.getParameter("cmd") == null) {
+				error = "無効なアクセスです";
+				return;
+			}
 
 			// 変更処理用のUserを作成
 			User changeUser = userDao.getUserbyId(id);
@@ -154,7 +160,7 @@ public class AccountEditServlet extends HttpServlet {
 			
 		} catch (IllegalStateException e) {
 			// エラー処理
-			error = "DB接続エラーの為、アカウント編集はできませんでした。";
+			error = "DB接続エラーの為、一覧表示はできませんでした。";
 			e.printStackTrace();
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。<br>" + e;
