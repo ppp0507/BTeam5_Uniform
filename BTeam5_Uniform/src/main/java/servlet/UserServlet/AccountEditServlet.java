@@ -130,6 +130,13 @@ public class AccountEditServlet extends HttpServlet {
 				afterUser.setEmail(mail);
 				afterUser.setAddress(address);
 				
+				// メールアドレスの重複しているユーザーがいないか検査
+				// 変更対象のユーザーのメールアドレスを変えずに変更を行おうとしても発生するので、同じメールアドレスを指定した場合の判定も行う
+				if (userDao.selectByUser(afterUser.getEmail()).getUserid() != 0 && beforeUser.getEmail().equals(afterUser.getEmail()) == false) {
+					error = "既にそのメールアドレスは登録されています。";
+					return;
+				}
+				
 				// 更新処理実行
 				userDao.update(changeUser, name, password, mail, address, authority_id);
 				
