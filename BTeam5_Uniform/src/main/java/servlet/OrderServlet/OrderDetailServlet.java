@@ -39,14 +39,14 @@ public class OrderDetailServlet extends HttpServlet {
 			order = objDao.getDetail(id);
 
 			if (order.getId() == 0) {
-				error = "指定したIDの商品は存在しません。";
+				error = "存在しない注文です。";
 			}
 			
 			//⑥取得した書籍情報を「order」という名前でリクエストスコープに登録します。
 			request.setAttribute("order",order);
 
 		}catch (IllegalStateException e) {
-			error ="DB接続エラーの為、登録できませんでした。";
+			error ="DB接続エラーの為、表示できませんでした。";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。<br>" + e;
 			e.printStackTrace();
