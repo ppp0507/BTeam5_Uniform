@@ -170,19 +170,20 @@ public class ProductDAO {
 	
 	//editDetail():商品修正
 	 //修正したい商品の商品番号(ID)必要です。
-	public void editDetail(int id,String name ,int price, int stock, String image_url) {
+	public int editDetail(int id,String name ,int price, int stock, String image_url) {
 		//修正したくない項目は元のデータそのまま入れてください
 		
 		Connection con = null;
 		Statement smt = null;
 
+		int count = -1;
 		try {
 			con = getConnection();
 			smt = con.createStatement();
 
 			//SQL文発行
 			String sql = "UPDATE product SET name='"+name+"', price="+price+", stock="+stock+", image_url='"+image_url+"' WHERE id="+id;
-			smt.executeUpdate(sql);
+			count = smt.executeUpdate(sql);
 
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
@@ -202,7 +203,8 @@ public class ProductDAO {
 				}
 			}
 		}
-
+		
+		return count;
 	}
 	
 
@@ -211,17 +213,18 @@ public class ProductDAO {
 	 * ！！注文されている商品は削除できません！(ForeignKeyとして使われているためエラー起きます)
 	 * @param id
 	 */
-	public void delete(int id) {
+	public int delete(int id) {
 		Connection con = null;
 		Statement smt = null;
 
+		int count = -1;
 		try {
 			con = getConnection();
 			smt = con.createStatement();
 
 			//SQL文発行
 			String sql = "DELETE FROM product WHERE id=" + id;
-			smt.executeUpdate(sql);
+			count = smt.executeUpdate(sql);
 
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
@@ -242,5 +245,6 @@ public class ProductDAO {
 			}
 		}
 
+		return count;
 	}
 }

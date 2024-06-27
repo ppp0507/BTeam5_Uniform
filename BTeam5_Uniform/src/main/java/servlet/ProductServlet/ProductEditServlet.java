@@ -94,7 +94,12 @@ public class ProductEditServlet extends HttpServlet {
 				ProductDAO productDao = new ProductDAO();
 	
 				//ProductDAOのメソッドを使用してDBの情報を更新(写真URLはnull)
-				productDao.editDetail(id, name, price2, stock2, null);
+				int editCount = productDao.editDetail(id, name, price2, stock2, null);
+				
+				if (editCount < 1) {
+					error = "存在しない商品です。";
+					return;
+				}
 				
 				toForward = "/productList";
 				
@@ -111,7 +116,12 @@ public class ProductEditServlet extends HttpServlet {
 				// FOREIGN KEY制約があるので、注文テーブルに登録されている削除対象のproduct_idをダミーに置き換え
 				orderDao.moveDeletedOrdersByProduct_id(product_id);
 				// 商品の削除
-				productDao.delete(product_id);
+				int delCount = productDao.delete(product_id);
+				
+				if (delCount < 1) {
+					error = "存在しない商品です。";
+					return;
+				}
 				
 				toForward = "/productList";
 				
