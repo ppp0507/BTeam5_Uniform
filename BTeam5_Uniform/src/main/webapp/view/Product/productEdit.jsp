@@ -112,7 +112,7 @@ session.setAttribute("delete_product_id", product.getId());
 							<div><%=product.getName()%></div>
 						</div>
 						<div style="flex: 2">
-							<input type="text" name="name">
+							<input type="text" name="name" value="<%=product.getName()%>">
 						</div>
 						<span class="flex-indent"></span>
 
@@ -123,7 +123,7 @@ session.setAttribute("delete_product_id", product.getId());
 							<div><%=product.getPrice()%></div>
 						</div>
 						<div style="flex: 2">
-							<input type="text" name="price">
+							<input type="text" name="price" value="<%=product.getPrice()%>">
 						</div>
 						<span class="flex-indent"></span>
 
@@ -134,7 +134,7 @@ session.setAttribute("delete_product_id", product.getId());
 							<div><%=product.getStock()%></div>
 						</div>
 						<div style="flex: 2">
-							<input type="text" name="stock">
+							<input type="text" name="stock" value="<%=product.getStock()%>">
 						</div>
 						<span class="flex-indent"></span>
 
